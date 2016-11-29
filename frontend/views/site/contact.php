@@ -1,0 +1,64 @@
+<header class="section background-primary text-center tp_003">
+    <h1 class="text-white margin-bottom-0 text-size-28 text-thin text-line-height-1">Thông tin liên hệ</h1>
+</header>
+<div class="section background-white">
+    <div class="line">
+        <div class="margin">
+
+            <!-- Company Information -->
+            <div class="s-12 m-12 l-6">
+                <h2 class="text-uppercase text-strong margin-bottom-30">Thông tin nhà thuốc</h2>
+                <div class="float-left">
+                    <i class="icon-placepin background-primary icon-circle-small text-size-20"></i>
+                </div>
+                <div class="margin-left-80 margin-bottom">
+                    <h4 class="text-strong margin-bottom-0">Địa chỉ</h4>
+                    <p>Ngõ 378, Mỹ Đình<br>
+                        Từ Liêm<br>
+                        Hà Nội
+                    </p>
+                </div>
+                <div class="float-left">
+                    <i class="icon-paperplane_ico background-primary icon-circle-small text-size-20"></i>
+                </div>
+                <div class="margin-left-80 margin-bottom">
+                    <h4 class="text-strong margin-bottom-0">E-mail</h4>
+                    <p>cskh.thuoc@gmail.com<br>
+                        tuantrylook@gmail.com
+                    </p>
+                </div>
+                <div class="float-left">
+                    <i class="icon-smartphone background-primary icon-circle-small text-size-20"></i>
+                </div>
+                <div class="margin-left-80">
+                    <h4 class="text-strong margin-bottom-0">Phone Numbers</h4>
+                    <p>0943434093</p>
+                </div>
+            </div>
+
+            <!-- Contact Form -->
+            <div class="s-12 m-12 l-6">
+                <h2 class="text-uppercase text-strong margin-bottom-30">Liên hệ</h2>
+                <form class="customform">
+                    <div class="line">
+                        <div class="margin">
+                            <div class="s-12 m-12 l-6">
+                                <input name="email" class="required email border-radius" placeholder="Your e-mail" title="Your e-mail" type="text" />
+                            </div>
+                            <div class="s-12 m-12 l-6">
+                                <input name="name" class="name border-radius" placeholder="Your name" title="Your name" type="text" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="s-12">
+                        <input name="subject" class="subject border-radius" placeholder="Subject" title="Subject" type="text" />
+                    </div>
+                    <div class="s-12">
+                        <textarea name="message" class="required message border-radius" placeholder="Your message" rows="3"></textarea>
+                    </div>
+                    <div class="s-12 m-12 l-4"><button class="submit-form button background-primary border-radius text-white" type="submit">Gửi thông tin</button></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

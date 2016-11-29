@@ -1,0 +1,225 @@
+html,
+body {
+    height: 100%;
+}
+
+.wrap {
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -60px;
+    padding: 0 0 60px;
+}
+
+.wrap > .container {
+    padding: 70px 15px 20px;
+}
+
+.footer {
+    height: 60px;
+    background-color: #f5f5f5;
+    border-top: 1px solid #ddd;
+    padding-top: 20px;
+}
+
+.jumbotron {
+    text-align: center;
+    background-color: transparent;
+}
+
+.jumbotron .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+}
+
+.not-set {
+    color: #c55;
+    font-style: italic;
+}
+
+/* add sorting icons to gridview sort links */
+a.asc:after, a.desc:after {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    padding-left: 5px;
+}
+
+a.asc:after {
+    content: "\e151";
+}
+
+a.desc:after {
+    content: "\e152";
+}
+
+.sort-numerical a.asc:after {
+    content: "\e153";
+}
+
+.sort-numerical a.desc:after {
+    content: "\e154";
+}
+
+.sort-ordinal a.asc:after {
+    content: "\e155";
+}
+
+.sort-ordinal a.desc:after {
+    content: "\e156";
+}
+
+.grid-view td {
+    white-space: nowrap;
+}
+
+.grid-view .filters input,
+.grid-view .filters select {
+    min-width: 50px;
+}
+
+.hint-block {
+    display: block;
+    margin-top: 5px;
+    color: #999;
+}
+
+.error-summary {
+    color: #a94442;
+    background: #fdf7f7;
+    border-left: 3px solid #eed3d7;
+    padding: 10px 20px;
+    margin: 0 0 15px 0;
+}
+
+/* align the logout "link" (button in form) of the navbar */
+.nav li > form > button.logout {
+    padding: 15px;
+    border: none;
+}
+
+@media(max-width:767px) {
+    .nav li > form > button.logout {
+        display:block;
+        text-align: left;
+        width: 100%;
+        padding: 10px 15px;
+    }
+}
+
+.nav > li > form > button.logout:focus,
+.nav > li > form > button.logout:hover {
+    text-decoration: none;
+}
+
+.nav > li > form > button.logout:focus {
+    outline: none;
+}
+.tp_001{
+    float: right;
+    margin-right: 27px;
+}
+.tp_002{
+    padding-top: 20px;
+    margin-left: 27px;
+}
+.tp_003{
+    padding: 1rem 1.25rem;
+}
+.tp_004{
+    padding: 0 1.25rem;
+}
+.bottombar{
+     filter:alpha(opacity=50);
+     -moz-opacity:0.9;
+     -khtml-opacity: 0.9;
+     opacity: 0.9;
+     background-color : white;
+     bottom : 0;
+     right: 0;
+     color : #fff000;
+     font-size : 1.5em;
+     position : fixed;
+     z-index : 999;
+ }
+.bottombar:hover{
+    filter:alpha(opacity=90);
+    -moz-opacity:1;
+    -khtml-opacity: 1;
+    opacity: 1;
+}
+
+.top_cart{
+    filter:alpha(opacity=50);
+    -moz-opacity:0.9;
+    -khtml-opacity: 0.9;
+    opacity: 0.9;
+    top : 0;
+    right: 150px;
+    color : #fff000;
+    position : fixed;
+    z-index : 999;
+}
+.top_cart:hover{
+    filter:alpha(opacity=90);
+    -moz-opacity:1;
+    -khtml-opacity: 1;
+    opacity: 1;
+}
+.text_request{
+    margin-top: 10px;
+    font-size: 0.5em;
+}
+
+@media screen and (max-width: 600px) {
+    .tp_005 {
+        visibility: hidden;
+        clear: both;
+        float: left;
+        margin: 10px auto 5px 20px;
+        width: 28%;
+        display: none;
+    }
+    .tp_006{
+        margin-left: 20px;
+    }
+    .top_cart{
+        filter:alpha(opacity=50);
+        -moz-opacity:0.9;
+        -khtml-opacity: 0.9;
+        opacity: 0.9;
+        top : 8px;
+        right: 12px;
+        color : #fff000;
+        position : fixed;
+        z-index : 999;
+    }
+    .top_cart:hover{
+        filter:alpha(opacity=90);
+        -moz-opacity:1;
+        -khtml-opacity: 1;
+        opacity: 1;
+    }
+}
+.top-nav.s-12.l-10{
+    padding: 1.75rem 0;
+}
+
+@media screen and (max-width: 600px) {
+    .top-nav.s-12.l-10 {
+        padding: 0;
+    }
+}
+
+.image_cart{
+    width:20px;
+    padding-top: 10px;
+    float: left;
+}
+.number_cart{
+    color: #E8740C;
+    float: left;
+}
