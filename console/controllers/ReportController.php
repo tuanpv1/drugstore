@@ -45,43 +45,43 @@ class ReportController extends Controller
                 ->andWhere('created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('created_at <= :end')->addParams([':end' => $end_day])
                 ->sum('number');
-            echo"<pre>";print_r($number);die();
+//            echo"<pre>";print_r($number);die();
             $number_success = OrderDetail::find()
                 ->innerJoin('order','order.id = order_detail.order_id')
                 ->andWhere('order_detail.created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('order_detail.created_at <= :end')->addParams([':end' => $end_day])
                 ->andWhere(['order.status'=>Order::STATUS_SUCCESS])
-                ->sum('number');
+                ->sum('order_detail.number');
             $number_error = OrderDetail::find()
                 ->innerJoin('order','order.id = order_detail.order_id')
                 ->andWhere('order_detail.created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('order_detail.created_at <= :end')->addParams([':end' => $end_day])
                 ->andWhere(['order.status'=>Order::STATUS_ERROR])
-                ->sum('number');
+                ->sum('order_detail.number');
             $number_tran = OrderDetail::find()
                 ->innerJoin('order','order.id = order_detail.order_id')
                 ->andWhere('order_detail.created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('order_detail.created_at <= :end')->addParams([':end' => $end_day])
                 ->andWhere(['order.status'=>Order::STATUS_TRANSPORT])
-                ->sum('number');
+                ->sum('order_detail.number');
             $number_order = OrderDetail::find()
                 ->innerJoin('order','order.id = order_detail.order_id')
                 ->andWhere('order_detail.created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('order_detail.created_at <= :end')->addParams([':end' => $end_day])
                 ->andWhere(['order.status'=>Order::STATUS_TP])
-                ->sum('number');
+                ->sum('order_detail.number');
             $number_order1 = OrderDetail::find()
                 ->innerJoin('order','order.id = order_detail.order_id')
                 ->andWhere('order_detail.created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('order_detail.created_at <= :end')->addParams([':end' => $end_day])
                 ->andWhere(['order.status'=>Order::STATUS_TP1])
-                ->sum('number');
+                ->sum('order_detail.number');
             $number_return = OrderDetail::find()
                 ->innerJoin('order','order.id = order_detail.order_id')
                 ->andWhere('order_detail.created_at >= :start')->addParams([':start' => $to_day])
                 ->andWhere('order_detail.created_at <= :end')->addParams([':end' => $end_day])
                 ->andWhere(['order.status'=>Order::STATUS_RETURN])
-                ->sum('number');
+                ->sum('order_detail.number');
             // tinh tong don hang
             $total = Order::find()
                 ->andWhere('created_at >= :start')->addParams([':start' => $to_day])
