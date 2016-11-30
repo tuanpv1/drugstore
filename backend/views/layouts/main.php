@@ -131,24 +131,49 @@ AppAsset::register($this);
             ]
         ],
         [
+            'label' => 'QL Nội dung',
+            'url' => 'javascript:;',
+            'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+            'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+            'items' => [
+                [
+                    'encode' => false,
+                    'label' => 'QL Thuốc',
+                    'url' => ['product/index'],
+                ],
+                [
+                    'encode' => false,
+                    'label' => 'QL Banner',
+                    'url' => ['banner/index'],
+                ],
+                [
+                    'encode' => false,
+                    'label' => 'QL Bài viết Mẹo hay',
+                    'url' => ['post/index'],
+                ],
+            ]
+        ],
+        [
             'label' => 'QL Khách hàng',
             'url' => ['subcriber/index'],
         ],
         [
-            'label' => 'QL Đơn hàng',
-            'url' => ['order/index'],
-        ],
-        [
-            'label' => 'QL Banner',
-            'url' => ['banner/index'],
-        ],
-        [
-            'label' => 'QL Thuốc',
-            'url' => ['product/index'],
-        ],
-        [
-            'label' => 'QL Bài viết Mẹo hay',
-            'url' => ['post/index'],
+            'label' => 'QL Thống kê báo cáo',
+            'url' => 'javascript:;',
+            'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+            'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+            'items' => [
+                [
+                    'encode' => false,
+                    'label' => 'QL Đơn hàng',
+                    'url' => ['order/index'],
+                ],
+                [
+                    'encode' => false,
+                    'label' => 'QL Báo cáo',
+                    'url' => ['report/product'],
+                ],
+            ]
         ],
     ];
     echo Nav::widget([

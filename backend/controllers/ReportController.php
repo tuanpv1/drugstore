@@ -32,13 +32,14 @@ class ReportController extends Controller
     public function actionProduct()
     {
         $param = Yii::$app->request->queryParams;
-        $from_date = isset($param['ReportDonationForm']['from_date']) ? $param['ReportDonationForm']['from_date'] : null;
-        $to_date = isset($param['ReportDonationForm']['to_date']) ? $param['ReportDonationForm']['to_date'] : null;
+        $from_date = isset($param['FormReport']['from_date']) ? $param['FormReport']['from_date'] : null;
+        $to_date = isset($param['FormReport']['to_date']) ? $param['FormReport']['to_date'] : null;
 
         $report = new FormReport();
         $report->from_date = $from_date;
-        $report->from_date = $to_date;
+        $report->to_date = $to_date;
         $report->content = null;
+//        echo "<pre>";print_r($report);die();
 
         $report->generateReport();
 

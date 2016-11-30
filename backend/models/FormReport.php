@@ -27,26 +27,37 @@ class FormReport extends Model
     public function attributeLabels()
     {
         return [
-            'to_date' => 'Từ Ngày',
-            'from_date' => 'Đến Ngày',
+            'to_date' => 'Đến Ngày',
+            'from_date' => 'Từ Ngày',
         ];
     }
 
     public function generateReport()
     {
-        if ($this->from_date == '' || $this->to_date == '') {
-            $to_date = (new DateTime('now'))->setTime(0, 0)->format('Y-m-d H:i:s');
-            $from_date = (new DateTime('now'))->setTime(0, 0)->modify('-7 days')->format('Y-m-d H:i:s');
-        } else {
-            if ($this->to_date != '' && DateTime::createFromFormat("d/m/Y", $this->to_date)) {
-                $to_date = DateTime::createFromFormat("d/m/Y", $this->to_date)->setTime(0, 0)->format('Y/m/d H:i:s');
+
+        if ($this->from_date == '' &&  $this->to_date == '') {
+            $to_date = (new DateTime('now'))->format('Y-m-d');
+            $from_date = (new DateTime('now'))->modify('-7 days')->format('Y-m-d');
+        }elseif($this->from_date != '' && $this->to_date != '')
+        {
+            $date_to_tp = str_replace('/', '-', $this->to_date);
+            $date_from_tp = str_replace('/', '-', $this->from_date);
+            $to_date = date('Y-m-d',strtotime($date_to_tp));
+            $from_date = date('Y-m-d',strtotime($date_from_tp));
+        }else
+        {
+            if ($this->to_date != '') {
+                $date_to_tp = str_replace('/', '-', $this->to_date);
+                $to_date = date('Y-m-d',strtotime($date_to_tp));
             } else {
-                $to_date = (new DateTime('now'))->setTime(0, 0)->format('Y-m-d H:i:s');
+                $to_date = (new DateTime('now'))->format('Y-m-d');
             }
-            if ($this->from_date != '' && DateTime::createFromFormat("d/m/Y", $this->from_date)) {
-                $from_date = DateTime::createFromFormat("d/m/Y", $this->from_date)->setTime(0, 0)->format('Y-m-d H:i:s');
+
+            if ($this->from_date != '') {
+                $date_from_tp = str_replace('/', '-', $this->from_date);
+                $from_date = date('Y-m-d',strtotime($date_from_tp));
             } else {
-                $from_date = (new DateTime('now'))->setTime(0, 0)->format('Y-m-d H:i:s');
+                $from_date = (new DateTime('now'))->format('Y-m-d');
             }
         }
 

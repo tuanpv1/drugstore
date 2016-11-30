@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     <div class="row form-group">
                         <div class="col-md-8 col-md-offset-2">
                             <?php $form = ActiveForm::begin([
-                                'action' => Url::to(['report/donation']),
+                                'action' => Url::to(['report/product']),
                                 'method' => 'GET'
                             ]); ?>
 
