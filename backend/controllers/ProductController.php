@@ -2,8 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\OrderDetail;
 use common\models\Product;
 use common\models\ProductSearch;
+use common\models\User;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -140,8 +142,18 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = Product::findOne($id);
+        if($model->status == Product::STATUS_ACTIVE){
+            Yii::$app->getSession()->setFlash('error', 'Không được xóa sản phẩm ở trạng thái hoạt động');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        $order_detail = OrderDetail::findOne(['id_product'=>$id]);
+        if($order_detail){
+            Yii::$app->getSession()->setFlash('error', 'Không được xóa sản phẩm đang có trong đơn hàng, vui lòng chuyển sang chế độ ẩn sản phẩm.');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
+        $model->delete();
+        Yii::$app->getSession()->setFlash('success', 'Đã xóa sản phẩm thành công');
         return $this->redirect(['index']);
     }
 

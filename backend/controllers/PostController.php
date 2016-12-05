@@ -140,8 +140,14 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $model = Post::findOne($id);
+        if($model->status == Post::STATUS_ACTIVE){
+            Yii::$app->getSession()->setFlash('error', 'Không được xóa bài viết ở trạng thái hoạt động');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }
 
+        $model->delete();
+        Yii::$app->getSession()->setFlash('success', 'Đã xóa bài viết thành công');
         return $this->redirect(['index']);
     }
 

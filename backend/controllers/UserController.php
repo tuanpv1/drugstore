@@ -125,9 +125,16 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
-        return $this->redirect(['index']);
+        $model = User::findOne($id);
+        if($model->status == User::STATUS_ACTIVE){
+            Yii::$app->getSession()->setFlash('error', 'Không được xóa người dùng ở trạng thái hoạt động');
+            return $this->redirect(['view', 'id' => $model->id]);
+        }else{
+            $model->status = User::STATUS_DELETED;
+            $model->save(false);
+            Yii::$app->getSession()->setFlash('success', 'Đã xóa người dùng thành công');
+            return $this->redirect(['index']);
+        }
     }
 
     /**
