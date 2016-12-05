@@ -4,7 +4,6 @@
 <div class="section background-white">
     <div class="line">
         <div class="margin">
-
             <!-- Company Information -->
             <div class="s-12 m-12 l-6">
                 <h2 class="text-uppercase text-strong margin-bottom-30">Thông tin nhà thuốc</h2>
@@ -13,9 +12,8 @@
                 </div>
                 <div class="margin-left-80 margin-bottom">
                     <h4 class="text-strong margin-bottom-0">Địa chỉ</h4>
-                    <p>Ngõ 378, Mỹ Đình<br>
-                        Từ Liêm<br>
-                        Hà Nội
+                    <p>Xã Đông Lỗ, Hiệp Hòa, <br>
+                        TP Bắc Giang <br>
                     </p>
                 </div>
                 <div class="float-left">
@@ -23,16 +21,14 @@
                 </div>
                 <div class="margin-left-80 margin-bottom">
                     <h4 class="text-strong margin-bottom-0">E-mail</h4>
-                    <p>cskh.thuoc@gmail.com<br>
-                        tuantrylook@gmail.com
-                    </p>
+                    <p>onglangchuc@gmail.com</p><br>
                 </div>
                 <div class="float-left">
                     <i class="icon-smartphone background-primary icon-circle-small text-size-20"></i>
                 </div>
                 <div class="margin-left-80">
-                    <h4 class="text-strong margin-bottom-0">Phone Numbers</h4>
-                    <p>0943434093</p>
+                    <h4 class="text-strong margin-bottom-0">Hotline</h4>
+                    <p>0972.64.9696</p>
                 </div>
             </div>
 
@@ -43,20 +39,21 @@
                     <div class="line">
                         <div class="margin">
                             <div class="s-12 m-12 l-6">
-                                <input name="email" class="required email border-radius" placeholder="Your e-mail" title="Your e-mail" type="text" />
+                                <input name="tel" id="phone_contact" class="required email border-radius" placeholder="Số điện thoại" title="Your e-mail" type="text" />
+                                <h6  id="c_phone_call_contact" class="text-size-28" style="color: red">Số điện thoại không được bỏ trống</h6>
+                                <h6  id="cc_phone_call_contact" class="text-size-28" style="color: red">Số điện thoại không đúng định dạng</h6>
                             </div>
                             <div class="s-12 m-12 l-6">
-                                <input name="name" class="name border-radius" placeholder="Your name" title="Your name" type="text" />
+                                <input name="name" id="name_contact" class="name border-radius" placeholder="Họ và tên" title="Your name" type="text" />
                             </div>
                         </div>
                     </div>
                     <div class="s-12">
-                        <input name="subject" class="subject border-radius" placeholder="Subject" title="Subject" type="text" />
+                        <textarea name="message" id="message_contact" class="required message border-radius" placeholder="Nội dung cần hỗ trợ" rows="3"></textarea>
                     </div>
-                    <div class="s-12">
-                        <textarea name="message" class="required message border-radius" placeholder="Your message" rows="3"></textarea>
+                    <div class="s-12 m-12 l-4">
+                        <a class="submit-form button background-primary border-radius text-white" id="bt_contact">Gửi thông tin</a>
                     </div>
-                    <div class="s-12 m-12 l-4"><button class="submit-form button background-primary border-radius text-white" type="submit">Gửi thông tin</button></div>
                 </form>
             </div>
         </div>

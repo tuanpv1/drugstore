@@ -30,6 +30,7 @@ use yii\helpers\Url;
 <section class="section background-white">
     <div class="line">
         <div class="margin text-center">
+            <h5 class="text-thin headline text-center margin-bottom-50">Danh sách <span class="text-primary">Thuốc</span></h5>
             <?php
             if(isset($product)) {
                 foreach($product as $item) {
@@ -61,7 +62,7 @@ use yii\helpers\Url;
     <div class="line">
         <div class="s-12 m-10 l-11">
             <p class="s-12 m-10 l-8 text-size-20 right">
-                Mọi thắc mắc bạn có thể liê hệ ngay tổng đài tư vấn hỗ trợ<br> hotline: 0943434093
+                Mọi thắc mắc bạn có thể liê hệ ngay tổng đài tư vấn hỗ trợ<br> hotline: 0972.64.9696
             </p>
             <p class="s-12 m-10 l-4 right">
                 <img class="right" style="width: 300px" src="<?=  Yii::$app->request->baseUrl; ?>/img/tuvan.jpg" alt="Tổng đài hỗ trợ">
@@ -74,60 +75,38 @@ use yii\helpers\Url;
 <!-- Section 4 -->
 <section class="section background-white">
     <div class="line">
-        <h4 class="text-thin headline text-center text-s-size-20 margin-bottom-50">Bài viết mẹo hay <span class="text-primary">Chữa bệnh</span></h4>
+        <h5 class="text-thin headline text-center margin-bottom-50">Bài viết mẹo hay <span class="text-primary">Chữa bệnh</span></h5>
         <div class="carousel-default owl-carousel carousel-wide-arrows">
-            <?php
-            if($post) {
-//                foreach ($post as $key => $value) {
-                foreach ($post as $item) {
-//                    echo "<pre>";print($key);die();
-                    ?>
-                    <div class="item">
-                        <div class="margin">
-                            <div class="s-12 m-12 l-6">
-                                <div class="image-border-radius margin-m-bottom">
-                                    <div class="margin">
-                                        <div class="s-12 m-12 l-4 margin-m-bottom">
-                                            <a class="image-hover-zoom"
-                                               href="<?= Url::to(['post/view', 'id' => $item->id]) ?>"><img
-                                                    src="<?= $item->getImageLink() ?>" alt="<?= $item->name ?>"></a>
-                                        </div>
-                                        <div class="s-12 m-12 l-8 margin-m-bottom">
-                                            <h3><a class="text-dark text-primary-hover"
-                                                   href="<?= Url::to(['post/view', 'id' => $item->id]) ?>"><?= $item->name ?></a>
-                                            </h3>
-                                            <p><?= $item->short_des ?></p>
-                                            <a class="text-more-info text-primary-hover"
-                                               href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">Xem chi tiết</a>
-                                        </div>
-                                    </div>
+            <div class="item">
+                <div class="margin">
+                <?php $index = 0; foreach ($post as $value) { ?>
+                    <div class="s-12 m-12 l-6">
+                        <div class="image-border-radius margin-m-bottom">
+                            <div class="margin">
+                                <div class="s-12 m-12 l-4 margin-m-bottom">
+                                    <a class="image-hover-zoom"
+                                       href="<?= Url::to(['post/detail', 'id' => $value->id]) ?>"><img
+                                            src="<?= $value->getImageLink() ?>" alt="<?= $value->name ?>"></a>
                                 </div>
-                            </div>
-                            <div class="s-12 m-12 l-6">
-                                <div class="image-border-radius margin-m-bottom">
-                                    <div class="margin">
-                                        <div class="s-12 m-12 l-4 margin-m-bottom">
-                                            <a class="image-hover-zoom"
-                                               href="<?= Url::to(['post/view', 'id' => $item->id]) ?>"><img
-                                                    src="<?= $item->getImageLink() ?>" alt="<?= $item->name ?>"></a>
-                                        </div>
-                                        <div class="s-12 m-12 l-8 margin-m-bottom">
-                                            <h3><a class="text-dark text-primary-hover"
-                                                   href="<?= Url::to(['post/view', 'id' => $item->id]) ?>"><?= $item->name ?></a>
-                                            </h3>
-                                            <p><?= $item->short_des ?></p>
-                                            <a class="text-more-info text-primary-hover"
-                                               href="<?= Url::to(['post/view', 'id' => $item->id]) ?>">Xem chi
-                                                tiết</a>
-                                        </div>
-                                    </div>
+                                <div class="s-12 m-12 l-8 margin-m-bottom">
+                                    <h3><a class="text-dark text-primary-hover"
+                                           href="<?= Url::to(['post/detail', 'id' => $value->id]) ?>"><?= $value->name ?></a>
+                                    </h3>
+                                    <p><?= $value->short_des ?></p>
+                                    <a class="text-more-info text-primary-hover"
+                                       href="<?= Url::to(['post/detail', 'id' => $value->id]) ?>">Xem chi tiết</a>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php
-                }
+                <?php
+                $index++;
+                if ($index % 2 == 0 && $index != count($post)) { ?>
+                </div>
+            </div>
+            <?php
             }
+        }
             ?>
         </div>
     </div>

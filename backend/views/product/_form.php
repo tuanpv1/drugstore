@@ -45,7 +45,11 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
     ]);
     ?>
 
-    <?= $form->field($model, 'des')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'des')->widget(CKEditor::className(), [
+        'options' => [
+            'rows' => 6,
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'price')->textInput() ?>
 

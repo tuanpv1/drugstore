@@ -157,12 +157,23 @@ class ProductController extends Controller
 
     public function actionSaveSub(){
         $phone = $_POST['phone'];
-
+        $name = '';
+        $message = '';
+        if(isset($_POST['name'])){
+            $name = $_POST['name']?$_POST['name']:'';
+            $message = $_POST['message']?$_POST['message']:'';
+        }
         $sub = new Subcriber();
         $sub->phone = $phone;
+        $sub->name = $name;
+        $sub->state = $message;
         $sub->status = Subcriber::STATUS_NOTCALL;
         if($sub->save()){
-            $message = 'Đã yêu cầu gọi lại thành công, bộ phận chăm sóc khách hàng sẽ gọi lại cho quý khách sau ít phút.';
+            if($sub->name == ''){
+                $message = 'Đã yêu cầu gọi lại thành công, bộ phận chăm sóc khách hàng sẽ gọi lại cho quý khách sau ít phút.';
+            }else{
+                $message = 'Đã gửi yêu cầu thành công, bộ phận chăm sóc khách hàng sẽ liên hệ lại cho quý khách sớm nhất.';
+            }
             return Json::encode(['success' => true, 'message' => $message]);
         }else{
             $message = 'Yêu cầu chưa được thực hiện vui lòng thử lại.';

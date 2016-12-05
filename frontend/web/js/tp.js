@@ -6,7 +6,11 @@ var baseurl = window.location.origin+'/drugstore/frontend/web/';
 
 $(window).load (function(){
     $('#c_phone_call').hide();
+    $('#c_phone_call_footer').hide();
+    $('#c_phone_call_contact').hide();
     $('#cc_phone_call').hide();
+    $('#cc_phone_call_footer').hide();
+    $('#cc_phone_call_contact').hide();
     $('#do_action_tp').hide();
     $('#c_name').hide();
     $('#c_address').hide();
@@ -46,14 +50,97 @@ $(document).ready(function(){
         }else {
             $('#c_phone').hide();
             $('#cc_phone_call').hide();
-            url = "<?=  Url::to(['product/save-sub']) ?>";
-            url_tp = "<?= Url::to(['site/index']) ?>";
+            url = baseurl + 'product/save-sub';
             var phone = $('#phone').val();
             $.ajax({
                 type: "POST",
                 url: url,
                 data: {
                     phone:phone,
+                },
+                success: function(data) {
+                    var rs = JSON.parse(data);
+                    if (rs['success']) {
+                        alert(rs['message']);
+                    }else {
+                        alert(rs['message']);
+                    }
+                }
+            });
+        }
+    });
+
+    $('#phone_footer').focusout(function(){
+        if(($(this).val().trim() == null || $(this).val().trim() == "")){
+            $('#c_phone_call_footer').show();
+            $(this).focus();
+        }else{
+            $('#c_phone_call_footer').hide();
+            if(validatePhone($(this).val())== false){
+                $('#cc_phone_call_footer').show();
+            }else{
+                $('#cc_phone_call_footer').hide();
+            }
+        }
+    });
+
+    $('#bt_footer').click(function(){
+        if($('#phone_footer').val().trim() == ""){
+            $('#c_phone_call_footer').show();
+        }else {
+            url = baseurl + 'product/save-sub';
+            var phone = $('#phone_footer').val();
+            var name = $('#name_footer').val();
+            var message = $('#message_footer').val();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    phone:phone,
+                    name:name,
+                    message:message
+                },
+                success: function(data) {
+                    var rs = JSON.parse(data);
+                    if (rs['success']) {
+                        alert(rs['message']);
+                    }else {
+                        alert(rs['message']);
+                    }
+                }
+            });
+        }
+    });
+
+    $('#phone_contact').focusout(function(){
+        if(($(this).val().trim() == null || $(this).val().trim() == "")){
+            $('#c_phone_call_contact').show();
+            $(this).focus();
+        }else{
+            $('#c_phone_call_contact').hide();
+            if(validatePhone($(this).val())== false){
+                $('#cc_phone_call_contact').show();
+            }else{
+                $('#cc_phone_call_contact').hide();
+            }
+        }
+    });
+
+    $('#bt_contact').click(function(){
+        if($('#phone_contact').val().trim() == ""){
+            $('#c_phone_call_contact').show();
+        }else {
+            url = baseurl + 'product/save-sub';
+            var phone = $('#phone_contact').val();
+            var name = $('#name_contact').val();
+            var message = $('#message_contact').val();
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {
+                    phone:phone,
+                    name:name,
+                    message:message
                 },
                 success: function(data) {
                     var rs = JSON.parse(data);

@@ -1,6 +1,7 @@
 <?php
 
 use common\models\Post;
+use common\widgets\CKEditor;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 
@@ -44,7 +45,11 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
 
     <?= $form->field($model, 'short_des')->textarea(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'des')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'des')->widget(CKEditor::className(), [
+        'options' => [
+            'rows' => 6,
+        ],
+    ]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(['Chọn trạng thái'=>Post::getListStatus()]) ?>
 
