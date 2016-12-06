@@ -23,11 +23,21 @@ class LoginForm extends Model
     {
         return [
             // username and password are both required
-            [['username', 'password'], 'required'],
+            [['username'], 'required','message'=>'Tên đăng nhập không được để trống'],
+            [ ['password'], 'required','message'=>'Mật khẩu không được để trống'],
             // rememberMe must be a boolean value
             ['rememberMe', 'boolean'],
             // password is validated by validatePassword()
             ['password', 'validatePassword'],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Tên đăng nhập',
+            'password' => 'Mật khẩu',
+            'rememberMe' => 'Ghi nhớ mật khẩu',
         ];
     }
 
