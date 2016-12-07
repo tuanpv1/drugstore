@@ -19,6 +19,7 @@ AppAsset::register($this);
 \common\assets\ToastAsset::config($this, [
     'positionClass' => \common\assets\ToastAsset::POSITION_TOP_RIGHT
 ]);
+$title = "Quản trị ông lang chức"
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -27,7 +28,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $title ?></title>
     <?php $this->head() ?>
 </head>
 <body class="page-container-bg-solid page-boxed page-md">

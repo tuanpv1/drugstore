@@ -13,6 +13,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+$title = "Chữa yếu sinh lý"
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -21,7 +22,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= $title ?></title>
     <?php $this->head() ?>
 </head>
 <body>
