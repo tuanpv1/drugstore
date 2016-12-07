@@ -206,7 +206,7 @@ AppAsset::register($this);
                             <div class="line">
                                 <div class="margin">
                                     <div class="s-6 m-6 1-8">
-                                        <input name="phone" id="phone" class="required email border-radius" placeholder="Số điện thoại" title="Số điện thoại" type="tel" />
+                                        <input name="phone_ddd" id="phone_ddd" class="required email border-radius" placeholder="Số điện thoại" title="Số điện thoại" type="tel" />
                                     </div>
                                     <div class="s-6 m-6 1-3">
                                         <a id="btn_tp" class="submit-form button background-primary border-radius text-white">Gửi</a>
@@ -217,8 +217,6 @@ AppAsset::register($this);
                     </div>
                 </div>
             </form>
-            <h6  id="c_phone_call" class="text-size-28" style="color: red">Số điện thoại không được bỏ trống</h6>
-            <h6  id="cc_phone_call" class="text-size-28" style="color: red">Số điện thoại không đúng định dạng</h6>
         </div>
     </div>
 <?php $this->endBody() ?>

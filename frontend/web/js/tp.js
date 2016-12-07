@@ -5,10 +5,10 @@ var baseurl = window.location.origin+'/drugstore/frontend/web/';
 
 
 $(window).load (function(){
-    $('#c_phone_call').hide();
+    //$('#c_phone_call').hide();
     $('#c_phone_call_footer').hide();
     $('#c_phone_call_contact').hide();
-    $('#cc_phone_call').hide();
+    //$('#cc_phone_call').hide();
     $('#cc_phone_call_footer').hide();
     $('#cc_phone_call_contact').hide();
     $('#do_action_tp').hide();
@@ -41,17 +41,13 @@ jQuery(document).ready(function(){
 
 $(document).ready(function(){
     $('#btn_tp').click(function(){
-        if($('#phone').val().trim() == ""){
-            $('#c_phone_call').show();
-            $('#cc_phone_call').hide();
-        }else if(validatePhone($('#phone').val())== false){
-            $('#cc_phone_call').show();
-            $('#c_phone_call').hide();
+        if($('#phone_ddd').val().trim() == ""){
+            alert('Không được để trống số điện thoại');
+        }else if(validatePhone($('#phone_ddd').val())== false){
+            alert('Số điện thoại không hợp lệ');
         }else {
-            $('#c_phone').hide();
-            $('#cc_phone_call').hide();
             url = baseurl + 'product/save-sub';
-            var phone = $('#phone').val();
+            var phone = $('#phone_ddd').val();
             $.ajax({
                 type: "POST",
                 url: url,
@@ -165,6 +161,7 @@ $(document).ready(function(){
     $('#phone').focusout(function(){
         if(($(this).val().trim() == null || $(this).val().trim() == "")){
             $('#c_phone').show();
+            $('#cc_phone').hide();
             $(this).focus();
         }else{
             $('#c_phone').hide();
