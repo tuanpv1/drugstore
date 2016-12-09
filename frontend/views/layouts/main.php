@@ -13,7 +13,7 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
-$title = "Chữa yếu sinh lý"
+$title = "Bổ thận tráng dương"
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
