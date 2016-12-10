@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = Yii::t('app','cap_nhat_quyen').': ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Permissions Backend', 'url' => ['permission']];
+$this->title = Yii::t('app','Cập nhật quyền: ') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý quyền backend'), 'url' => ['permission']];
 //$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view-permission', 'name' => $model->name]];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    Thông tin chung
+                    <?= Yii::t('app','Thông tin chung') ?>
                 </div>
             </div>
             <div class="portlet-body">
@@ -40,11 +40,11 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    <?= Yii::t('app','quyen_nhom_quyen') ?>
+                    <?= Yii::t('app','Quyền và nhóm quyền') ?>
                 </div>
             </div>
             <div class="portlet-body">
-                <h3><?= Yii::t('app','nhom_quyen_cha') ?></h3>
+                <h3>Nhóm quyền cha</h3>
                 <?= GridView::widget([
                     'id' => 'rbac-role-parent',
                     'dataProvider' => $model->getParentProvider(),

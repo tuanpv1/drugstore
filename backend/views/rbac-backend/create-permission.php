@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = 'Create Permission';
-$this->params['breadcrumbs'][] = ['label' => 'Permissions Backend', 'url' => ['permission']];
+$this->title = Yii::t('app','Thêm mới quyền');
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý quyền backend'), 'url' => ['permission']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">

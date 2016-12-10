@@ -16,8 +16,10 @@ use common\models\AuthRule;
     <?= $form->field($model, 'name')->textInput() ?>
     <?= $form->field($model, 'description')->textInput() ?>
 
+
+
     <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update',
+        <?= Html::submitButton($model->isNewRecord ? Yii::t('app','Tạo') : Yii::t('app','Cập nhật'),
             ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
     </div>
 

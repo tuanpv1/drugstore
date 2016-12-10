@@ -114,65 +114,82 @@ $title = "Quản trị ông lang chức"
 
     $menuItems = [
         [
-            'label' => 'QL Tài khoản',
+            'label' => Yii::t('app','QL Nội dung'),
             'url' => 'javascript:;',
             'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
             'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
             'items' => [
                 [
                     'encode' => false,
-                    'label' => 'Người dùng',
-                    'url' => ['/user','type'=>User::TYPE_USER],
-                ],
-                [
-                    'encode' => false,
-                    'label' => 'Quản trị viên',
-                    'url' => ['/user','type'=>User::TYPE_ADMIN],
-                ],
-            ]
-        ],
-        [
-            'label' => 'QL Nội dung',
-            'url' => 'javascript:;',
-            'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
-            'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
-            'items' => [
-                [
-                    'encode' => false,
-                    'label' => 'QL Thuốc',
+                    'label' => Yii::t('app','QL Thuốc'),
                     'url' => ['product/index'],
                 ],
                 [
                     'encode' => false,
-                    'label' => 'QL Banner',
+                    'label' => Yii::t('app','QL Banner'),
                     'url' => ['banner/index'],
                 ],
                 [
                     'encode' => false,
-                    'label' => 'QL Bài viết Mẹo hay',
+                    'label' => Yii::t('app','QL Bài viết Mẹo hay'),
                     'url' => ['post/index'],
                 ],
             ]
         ],
         [
-            'label' => 'QL Khách hàng',
+            'label' => Yii::t('app','QL Khách hàng'),
             'url' => ['subcriber/index'],
         ],
         [
-            'label' => 'QL Thống kê báo cáo',
+            'label' => Yii::t('app','QL Thống kê báo cáo'),
             'url' => 'javascript:;',
             'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
             'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
             'items' => [
                 [
                     'encode' => false,
-                    'label' => 'QL Đơn hàng',
+                    'label' => Yii::t('app','QL Đơn hàng'),
                     'url' => ['order/index'],
                 ],
                 [
                     'encode' => false,
-                    'label' => 'QL Báo cáo',
+                    'label' => Yii::t('app','QL Báo cáo'),
                     'url' => ['report/product'],
+                ],
+            ]
+        ],
+        [
+            'label' => Yii::t('app','Hệ thống'),
+            'url' => 'javascript:;',
+            'options' => ['class' => 'menu-dropdown mega-menu-dropdown'],
+            'linkOptions' => ['data-hover' => 'megamenu-dropdown', 'data-close-others' => 'true'],
+            'items' => [
+                [
+                    'encode' => false,
+                    'label' => Yii::t('app','Quản trị viên'),
+                    'url' => ['/user','type'=>User::TYPE_ADMIN],
+                ],
+                [
+                    'label' => Yii::t('app','QL quyền'),
+                    'items' => [
+                        [
+                            'encode' => false,
+                            'label' => '<i class="icon-key"></i>'.Yii::t('app','QL quyền trang backend'),
+                            'url' => ['rbac-backend/permission'],
+                            'require_auth' => true,
+                        ],
+                    ]
+                ],
+                [
+                    'label' => Yii::t('app','QL nhóm quyền'),
+                    'items' => [
+                        [
+                            'encode' => false,
+                            'label' => '<i class="icon-lock-open"></i>'.Yii::t('app','QL nhóm quyền trang backend'),
+                            'url' => ['rbac-backend/role'],
+                            'require_auth' => true,
+                        ],
+                    ]
                 ],
             ]
         ],

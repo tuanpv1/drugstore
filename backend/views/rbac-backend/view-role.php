@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\AuthItem */
 
 $this->title =  $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Roles backend', 'url' => ['role']];
+$this->params['breadcrumbs'][] = ['label' => 'Quản lý nhóm quyền trang backend', 'url' => ['role']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,11 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="col-md-12">
         <p>
-            <?= Html::a('Update', ['update-role', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete-role', 'name' => $model->name], [
+            <?= Html::a(Yii::t('app','Cập nhật'), ['update-role', 'name' => $model->name], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a(Yii::t('app','Xóa'), ['delete-role', 'name' => $model->name], [
                 'class' => 'btn btn-danger',
                 'data' => [
-                    'confirm' => 'Are you sure you want to delete this item?',
+                    'confirm' => Yii::t('app','Bạn chắc chắn muốn xóa?'),
                     'method' => 'post',
                 ],
             ]) ?>
@@ -39,17 +39,21 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attributes' => [
                         'name',
                         'description',
-//                        'data',
-//                        'rule_name',
-                        [                      // the owner name of the model
+                        [
                             'attribute'=>'created_at',
-//                            'label' => 'Ngày tham gia',
-                            'value' => date('d/m/Y H:i:s',$model->created_at),
+                            'format'=>['date', 'd/M/Y H:i:s '],
+                            'widgetOptions'=>[
+                                'class'=>\kartik\datecontrol\DateControl::classname(),
+                                'type'=>\kartik\datecontrol\DateControl::FORMAT_DATE
+                            ]
                         ],
-                        [                      // the owner name of the model
+                        [
                             'attribute'=>'updated_at',
-//                            'label' => 'Ngày thay đổi thông tin',
-                            'value' => date('d/m/Y H:i:s',$model->updated_at),
+                            'format'=>['date', 'd/M/Y H:i:s '],
+                            'widgetOptions'=>[
+                                'class'=>\kartik\datecontrol\DateControl::classname(),
+                                'type'=>\kartik\datecontrol\DateControl::FORMAT_DATE
+                            ]
                         ],
                     ],
                 ]) ?>

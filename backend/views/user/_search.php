@@ -19,41 +19,33 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'username') ?>
 
-    <?= $form->field($model, 'fullname') ?>
-
-    <?= $form->field($model, 'image') ?>
-
     <?= $form->field($model, 'auth_key') ?>
 
-    <?php // echo $form->field($model, 'password_hash') ?>
+    <?= $form->field($model, 'password_hash') ?>
 
-    <?php // echo $form->field($model, 'password_reset_token') ?>
+    <?= $form->field($model, 'password_reset_token') ?>
 
     <?php // echo $form->field($model, 'email') ?>
 
-    <?php // echo $form->field($model, 'address') ?>
-
-    <?php // echo $form->field($model, 'school') ?>
-
-    <?php // echo $form->field($model, 'phone') ?>
-
-    <?php // echo $form->field($model, 'money') ?>
-
-    <?php // echo $form->field($model, 'about') ?>
-
-    <?php // echo $form->field($model, 'gender') ?>
+    <?php // echo $form->field($model, 'role') ?>
 
     <?php // echo $form->field($model, 'status') ?>
-
-    <?php // echo $form->field($model, 'type') ?>
 
     <?php // echo $form->field($model, 'created_at') ?>
 
     <?php // echo $form->field($model, 'updated_at') ?>
 
+    <?php // echo $form->field($model, 'type') ?>
+
+    <?php // echo $form->field($model, 'site_id') ?>
+
+    <?php // echo $form->field($model, 'content_provider_id') ?>
+
+    <?php // echo $form->field($model, 'parent_id') ?>
+
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-default']) ?>
+        <?= Html::submitButton(Yii::t('app','Tìm kiếm'), ['class' => 'btn btn-primary']) ?>
+        <?= Html::resetButton(Yii::t('app','Nhập lại'), ['class' => 'btn btn-default']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

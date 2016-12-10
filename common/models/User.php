@@ -4,7 +4,9 @@ namespace common\models;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
+use yii\data\ActiveDataProvider;
 use yii\db\ActiveRecord;
+use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\web\IdentityInterface;
 
@@ -135,6 +137,45 @@ class User extends ActiveRecord implements IdentityInterface
         }
     }
 
+    public function getRolesName()
+    {
+        $str = "";
+        $roles = $this->getAuthItems()->all();
+        $action = 'rbac-backend/update-role';
+        foreach ($roles as $role) {
+            $res = Html::a($role['description'], [$action, 'name' => $role['name']]);
+//            $res = $role['description'];
+            $res .= " [" . sizeof($role['children']) . "]";
+            $str = $str . $res . '  ,';
+        }
+        return $str;
+    }
+
+    public function getAuthItems()
+    {
+//        return $this->hasMany(AuthItem::className(), ['name' => 'item_name'])->viaTable('v2_auth_assignment', ['user_id' => "$this->id"]);
+        return AuthItem::find()->andWhere(['name' => AuthAssignment::find()->select(['item_name'])->andWhere(['user_id' => $this->id])]);
+    }
+    public function getAuthItemProvider($acc_type = null)
+    {
+        if($acc_type){
+            return new ActiveDataProvider([
+                'query' => $this->getAuthItems()->andWhere(['acc_type' => $acc_type])
+            ]);
+        }else{
+            return new ActiveDataProvider([
+                'query' => $this->getAuthItems()
+            ]);
+        }
+    }
+
+    public function getMissingRoles($acc_type = AuthItem::ACC_TYPE_BACKEND)
+    {
+        $roles = AuthItem::find()->andWhere(['type' => AuthItem::TYPE_ROLE, 'acc_type' => $acc_type])
+            ->andWhere('name not in (select item_name from auth_assignment where user_id = :id)', [':id' => $this->id]);
+
+        return $roles->all();
+    }
     public function rules()
     {
         return [

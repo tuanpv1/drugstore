@@ -2,49 +2,75 @@
 
 namespace backend\controllers;
 
+use api\helpers\Message;
+use common\components\ActionLogTracking;
+use common\components\ActionProtectSuperAdmin;
+use common\models\UserActivity;
+use kartik\widgets\ActiveForm;
 use Yii;
 use common\models\User;
 use common\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use common\models\AuthAssignment;
 use yii\web\Response;
-use yii\widgets\ActiveForm;
+use common\auth\filters\Yii2Auth;
+use common\models\AuthItem;
 
 /**
  * UserController implements the CRUD actions for User model.
  */
-class UserController extends Controller
+class UserController extends BaseBEController
 {
-    /**
-     * @inheritdoc
-     */
     public function behaviors()
     {
-        return [
+        return array_merge(parent::behaviors(),[
+            [
+                'class' => ActionProtectSuperAdmin::className(),
+                'user' => Yii::$app->user,
+                'update_user' => function ($action, $params) {
+                    return $model = User::findOne($params['id']);
+                },
+                'only' => ['update', 'delete', 'view']
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'delete' => ['post','get'],
                 ],
             ],
-        ];
+            [
+                'class' => ActionLogTracking::className(),
+                'user' => Yii::$app->user,
+                'model_type_default' => UserActivity::ACTION_TARGET_TYPE_USER,
+                'post_action' => [
+                    ['action' => 'create', 'accept_ajax' => false],
+                    ['action' => 'delete', 'accept_ajax' => false],
+                    ['action' => 'update', 'accept_ajax' => false],
+                    ['action' => 'change-password', 'accept_ajax' => false],
+                    ['action' => 'add-auth-item', 'accept_ajax' => true],
+                    ['action' => 'revoke-auth-item', 'accept_ajax' => true]
+                ],
+                'only' => ['create', 'delete', 'update', 'change-password', 'add-auth-item', 'revoke-auth-item']
+            ],
+        ]);
     }
 
     /**
      * Lists all User models.
      * @return mixed
      */
-    public function actionIndex($type)
+    public function actionIndex()
     {
         $searchModel = new UserSearch();
-        $searchModel->type = $type;
         $params = Yii::$app->request->queryParams;
+        $params['UserSearch']['type'] = User::TYPE_ADMIN;
         $dataProvider = $searchModel->search($params);
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            "type" => $type,
         ]);
     }
 
@@ -53,47 +79,45 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
+    public function actionView($id, $active = 1)
     {
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'active' => $active
         ]);
     }
 
     /**
      * Creates a new User model.
      * If creation is successful, the browser will be redirected to the 'view' page.
+     * @param $close int
      * @return mixed
      */
-    public function actionCreate($type)
+    public function actionCreate()
     {
         $model = new User();
-        $model->type = $type;
         $model->setScenario('create');
+
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
         }
-
-        if ($model->load(Yii::$app->request->post())) {
-            $model->setPassword($model->password_hash);
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->status = User::STATUS_ACTIVE;
+            $model->setPassword($model->password);
             $model->generateAuthKey();
-            $model->type = $type;
-//            echo "<pre>";
-//            print_r($model->type);
-//            die();
-            if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Tạo tài khoản thành công!');
-                return $this->redirect(['view', 'id' => $model->id]);
-            } else {
-                Yii::$app->session->setFlash('error', 'Tạo tài khoản không thành công!');
-                Yii::error($model->getErrors());
-                return $this->redirect(['index', "type" => $type]);
+            if(!$model->save()){
+                Yii::$app->session->setFlash('error', Message::MSG_FAIL);
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
             }
+            Yii::$app->session->setFlash('success', Message::MSG_ADD_SUCCESS);
+            return $this->redirect(['index']);
+
         } else {
             return $this->render('create', [
                 'model' => $model,
-                'type' => $type
             ]);
         }
     }
@@ -107,14 +131,174 @@ class UserController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        /** get giá trị username */
+        $username = $model->username;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
-        } else {
-            return $this->render('update', [
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+        if ($model->load(Yii::$app->request->post()) ) {
+            /** Set lại username */
+            $model->username = $username;
+            if($model->update()){
+                Yii::$app->session->setFlash('success', Message::MSG_UPDATE_PROFILE);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
+        }
+
+        return $this->render('update', [
                 'model' => $model,
             ]);
+    }
+
+    public function actionInfo(){
+        $user = Yii::$app->user->identity;
+        return $this->render('info', ['model' => $user]);
+    }
+
+    public function actionUpdateOwner(){
+
+        /**
+         * @var $model User
+         */
+        $model = Yii::$app->user->identity;
+//        $model->setScenario('change-password');
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
         }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', Message::MSG_UPDATE_PROFILE);
+            return $this->redirect(['info']);
+        } else {
+            Yii::$app->session->setFlash('error', Message::MSG_FAIL);
+            return $this->redirect(['info']);
+        }
+    }
+
+    /**
+     * @param $id
+     * @return array|Response
+     * @throws NotFoundHttpException
+     * @throws \Exception
+     */
+    public function actionResetPassword($id)
+    {
+        $model = $this->findModel($id);
+        $model->setScenario('reset-password');
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            $model->password = $model->new_password;
+            $model->setPassword($model->password);
+            $model->generateAuthKey();
+            if($model->update()){
+                Yii::$app->session->setFlash('success',Yii::t('app', 'Khôi phục mật khẩu thành công'));
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+            Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
+
+//            if($model->validatePassword($model->old_password)){
+//                $model->password = $model->new_password;
+//                $model->setPassword($model->password);
+//                $model->generateAuthKey();
+//                $model->old_password = $model->new_password;
+//                if($model->update()){
+//                    Yii::$app->session->setFlash('success', 'Đổi mật khẩu thành công');
+//                    return $this->redirect(['view', 'id' => $model->id]);
+//                }
+//                Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
+//            }else{
+//                Yii::$app->getSession()->setFlash('error', 'Mật khẩu cũ không đúng');
+//            }
+
+        }
+//        Yii::info($model->getErrors());
+
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+    public function actionChangePassword($id)
+    {
+        $model = $this->findModel($id);
+        $model->setScenario('change-password');
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->validatePassword($model->old_password)){
+                $model->password = $model->new_password;
+                $model->setPassword($model->password);
+                $model->generateAuthKey();
+                $model->old_password = $model->new_password;
+                if($model->update()){
+                    Yii::$app->session->setFlash('success', 'Đổi mật khẩu thành công');
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+                Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
+            }else{
+                Yii::$app->getSession()->setFlash('error', 'Mật khẩu cũ không đúng');
+            }
+
+        }
+        Yii::info($model->getErrors());
+
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+
+    public function actionOwnerChangePassword()
+    {
+        /**
+         * @var $model User
+         */
+        $model = Yii::$app->user->identity;
+        $model->setScenario('change-password');
+
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
+
+//        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+//            $model->setPassword($model->new_password);
+//            $model->generateAuthKey();
+//            $model->old_password = $model->new_password;
+//            if($model->update()){
+//                Yii::$app->session->setFlash('success', 'Thay đổi mật khẩu user "'.$model->username.'" thành công!');
+//                return $this->redirect(['info']);
+//            }else{
+//                Yii::error($model->getErrors());
+//            }
+//        } else {
+//            Yii::$app->session->setFlash('error', 'Thay đổi mật khẩu user "'.$model->username.'" không thành công!');
+//            return $this->redirect(['info']);
+//        }
+        if ($model->load(Yii::$app->request->post()) ) {
+            if($model->validatePassword($model->old_password)){
+                $model->setPassword($model->new_password);
+                $model->generateAuthKey();
+                $model->old_password = $model->new_password;
+                if($model->update()){
+                    Yii::$app->session->setFlash('success', Yii::t('app','Đổi mật khẩu thành công'));
+                    return $this->redirect(['info']);
+                }
+                Yii::$app->getSession()->setFlash('error', Message::MSG_FAIL);
+            }else{
+                Yii::$app->getSession()->setFlash('error', Yii::t('app','Mật khẩu cũ không đúng'));
+            }
+
+        }
+        return $this->redirect(['info']);
     }
 
     /**
@@ -125,16 +309,24 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = User::findOne($id);
-        if($model->status == User::STATUS_ACTIVE){
-            Yii::$app->getSession()->setFlash('error', 'Không được xóa người dùng ở trạng thái hoạt động');
-            return $this->redirect(['view', 'id' => $model->id]);
-        }else{
-            $model->status = User::STATUS_DELETED;
-            $model->save(false);
-            Yii::$app->getSession()->setFlash('success', 'Đã xóa người dùng thành công');
+//        $this->findModel($id)->delete();
+//
+//        return $this->redirect(['index']);
+
+        $model=$this->findModel($id);
+        if($model->id == Yii::$app->user->getId()){
+            Yii::$app->session->setFlash('error',Yii::t('app', 'Bạn không thể thực hiện chức năng này!'));
             return $this->redirect(['index']);
         }
+        $model->status=User::STATUS_DELETED;
+        if($model->save()){
+            Yii::$app->session->setFlash('success', Yii::t('app','Xóa thành công'));
+            return $this->redirect(['index']);
+        }
+        var_dump($model->getFirstErrors());exit;
+        Yii::$app->session->setFlash('error', Message::MSG_FAIL);
+        return $this->redirect(['index']);
+
     }
 
     /**
@@ -149,7 +341,92 @@ class UserController extends Controller
         if (($model = User::findOne($id)) !== null) {
             return $model;
         } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
+            throw new NotFoundHttpException(Yii::t('app','Không tìm thấy trang yêu cầu'));
         }
     }
+
+    /**
+     * @return array
+     * @throws \Exception
+     */
+    public function actionRevokeAuthItem()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+        $post = Yii::$app->request->post();
+
+        $success = false;
+        $message = "Tham số không đúng";
+
+        if (isset($post['user']) && isset($post['item'])) {
+            $user = $post['user'];
+            $item = $post['item'];
+
+            $mapping = AuthAssignment::find()->andWhere(['user_id' => $user, 'item_name' => $item])->one();
+            if ($mapping) {
+                if ($mapping->delete()) {
+                    $success = true;
+                    $message = Yii::t('app',"Đã xóa quyền '$item' khỏi user '$user'!");
+                } else {
+                    $message = Yii::t('app',"Lỗi hệ thống, vui lòng thử lại sau");
+                }
+            } else {
+                $message = Yii::t('app',"Quyền '$item' chưa được cấp cho user '$user'!");
+            }
+
+        }
+
+        return [
+            'success' => $success,
+            'message' => $message
+        ];
+    }
+
+    /**
+     * add items to user
+     * @param  $id - id of user
+     * @return mixed
+     */
+    public function actionAddAuthItem($id)
+    {
+        /* @var $model User */
+        $model = User::findOne(['id' => $id]);
+
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $success = false;
+        $message = Yii::t('app',"User/nhóm quyền không tồn tại'");
+
+        if ($model) {
+            $post = Yii::$app->request->post();
+
+            if (isset($post['addItems'])) {
+                $items = $post['addItems'];
+
+                $count = 0;
+
+                foreach ($items as $item) {
+                    $role = AuthItem::findOne(['name' => $item]);
+                    $mapping = new AuthAssignment();
+                    $mapping->item_name = $item;
+                    $mapping->user_id = $id;
+                    if ($mapping->save()) {
+                        $count ++;
+                    }
+                }
+
+
+                if ($count >0) {
+                    $success = true;
+                    $message = Yii::t('app',"Đã thêm $count nhóm quyền cho người dùng '$model->username'");
+
+                }
+            }
+        }
+
+        return [
+            'success' => $success,
+            'message' => $message
+        ];
+    }
+
 }

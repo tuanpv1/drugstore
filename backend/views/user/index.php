@@ -1,16 +1,16 @@
 <?php
 
-use kartik\helpers\Html;
+use yii\helpers\Html;
 use kartik\grid\GridView;
+use common\auth\filters\Yii2Auth;
 use common\models\User;
 use yii\helpers\Url;
 
-/* @var $this yii\web\View
- * @var $type */
+/* @var $this yii\web\View */
 /* @var $searchModel common\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Quản lý tài khoản';
+$this->title = Yii::t('app','Quản lý người dùng');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -19,121 +19,120 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-cogs font-green-sharp"></i>
-                    <span
-                        class="caption-subject font-green-sharp bold uppercase">Quản lý tài khoản <?= User::getTypeNameByID($type) ?> </span>
+                    <span class="caption-subject font-green-sharp bold uppercase"><?= $this->title?></span>
                 </div>
                 <div class="tools">
                     <a href="javascript:;" class="collapse">
                     </a>
                 </div>
             </div>
-            <?= Html::a('Thêm mới người dùng', ['create','type'=>$type], ['class' => 'btn btn-success']) ?>
             <div class="portlet-body">
-                <?= GridView::widget([
-                    'dataProvider' => $dataProvider,
-                    'filterModel' => $searchModel,
-                    'columns' => [
-                       // ['class' => 'yii\grid\SerialColumn'],
+                <p><?= Html::a(Yii::t('app','Tạo người dùng'), ['create'], ['class' => 'btn btn-success']) ?> </p>
 
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'image',
-                            'format' => 'html',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return $model->image?Html::img('http://localhost/learnenglish/avatar/' .$model->image, ['width' => '200px']):Html::img('http://localhost/learnenglish/img/avt_df.png' , ['width' => '200px']);
-                            },
-                        ],
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'username',
-                            'format' => 'html',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return Html::a($model->username, ['view', 'id' => $model->id], ['class' => 'label label-primary']);
-                            },
-                        ],
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'fullname',
-                            'width' => '50px',
-                            'format' => 'html',
-                            'value' => function ($model, $key, $index, $widget) {
-                                return $model->fullname;
-                            },
-                        ],
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'type',
-                            'width' => '120px',
-                            'format' => 'raw',
-                            'value' => function ($model, $key, $index, $widget) {
-                                /**
-                                 * @var $model \common\models\User
-                                 */
-                                if ($model->type == User::TYPE_ADMIN) {
-                                    return '<span class="label label-danger">' . User::getTypeNameByID($model->type) . '</span>';
-                                }
-                                if($model->type == User::TYPE_USER){
-                                    return '<span class="label label-success">' . User::getTypeNameByID($model->type) . '</span>';
-                                }
-                            },
-                            'filter' => User::getListType(),
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                            'filterInputOptions' => ['placeholder' => "Tất cả"],
-                        ],
-                        'email:email',
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+        'filterModel' => $searchModel,
+        'columns' => [
+            [
+                'class' => 'yii\grid\SerialColumn',
+            ],
+            [
+                'attribute' => 'username',
+                'format' => 'raw',
+                'width'=>'20%',
+//                'vAlign' => 'middle',
+                'value' => function ($model, $key, $index, $widget) {
+                    /**
+                     * @var $model \common\models\User
+                     */
+                    $action = "user/view";
+                    $res = Html::a('<kbd>'.$model->username.'</kbd>', [$action, 'id' => $model->id ]);
+                    return $res;
 
-                        [
-                            'class' => '\kartik\grid\DataColumn',
-                            'attribute' => 'status',
-                            'width' => '120px',
-                            'format' => 'raw',
-                            'value' => function ($model, $key, $index, $widget) {
-                                /**
-                                 * @var $model common\models\User
-                                 */
-                                if ($model->status == User::STATUS_ACTIVE) {
-                                    return '<span class="label label-success">' . $model->getStatusName() . '</span>';
-                                } else {
-                                    return '<span class="label label-danger">' . $model->getStatusName() . '</span>';
-                                }
+                },
+            ],
+            [
+                'attribute' => 'email',
+                'width'=>'20%',
+            ],
+//            'auth_key',
+//            'password_hash',
+//            'password_reset_token',
+//             'email:email',
+//             'role',
+            [
+                'class' => '\kartik\grid\DataColumn',
+                'attribute'=>'status',
+                'width'=>'20%',
+                'format'=>'raw',
+                'value' => function ($model, $key, $index, $widget) {
+                    /**
+                     * @var $model \common\models\User
+                     */
+                    if($model->status == User::STATUS_ACTIVE){
+                        return '<span class="label label-success">'.$model->getStatusName().'</span>';
+                    }else{
+                        return '<span class="label label-danger">'.$model->getStatusName().'</span>';
+                    }
 
-                            },
-                            'filter' => User::getListStatus(),
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                            'filterInputOptions' => ['placeholder' => "Tất cả"],
-                        ],
-                        ['class' => 'yii\grid\ActionColumn',
-                            'template' => '{view}{update}{delete}',
-                            'buttons' => [
-                                'view' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::toRoute(['user/view', 'id' => $model->id]), [
-                                        'title' => 'Thông tin user',
-                                    ]);
+                },
+                'filter' => User::getListStatus(),
+                'filterType' => GridView::FILTER_SELECT2,
+                'filterWidgetOptions' => [
+                    'pluginOptions' => ['allowClear' => true],
+                ],
+                'filterInputOptions' => ['placeholder' => Yii::t('app',"Tất cả")],
+            ],
+            // 'created_at',
+            // 'updated_at',
+            // 'type',
+            // 'site_id',
+            // 'content_provider_id',
+            // 'parent_id',
+            [
+                'format' => 'html',
+                'label' => Yii::t('app','Nhóm quyền'),
+//                'vAlign' => 'middle',
+                'value' => function ($model, $key, $index, $widget) {
+                    /**
+                     * @var $model \common\models\User
+                     */
+                    $e = new Yii2Auth();
+                    if($e->superAdmin != $model->username){
+                        return $model->getRolesName();
+                    }else{
+                        return Yii::t('app',"Quản trị viên");
+                    }
+                },
+            ],
 
-                                },
-                                'update' => function ($url, $model) {
-                                    return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['user/update', 'id' => $model->id]), [
-                                        'title' => 'Cập nhật thông tin user',
-                                    ]);
-                                },
-                                'delete' => function ($url, $model) {
-            //                        Nếu là chính nó thì không cho thay đổi trạng thái
-                                    if ($model->id != Yii::$app->user->getId()) {
-                                        return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['user/delete', 'id' => $model->id]), [
-                                            'title' => 'Xóa user',
-                                        ]);
-                                    }
-                                }
-                            ]
-                        ],
-                    ],
-                ]); ?>
+            ['class' => 'kartik\grid\ActionColumn',
+                'template'=>'{view}{update}{delete}',
+                'buttons'=>[
+                    'view' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-eye-open"></span>', Url::toRoute(['user/view','id'=>$model->id]), [
+                            'title' => Yii::t('app','Thông tin user'),
+                        ]);
+
+                    },
+                    'update' => function ($url,$model) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', Url::toRoute(['user/update','id'=>$model->id]), [
+                            'title' => Yii::t('app','Cập nhật thông tin user'),
+                        ]);
+                    },
+                    'delete' => function ($url,$model) {
+                        if($model->id != Yii::$app->user->getId()){
+                            return Html::a('<span class="glyphicon glyphicon-trash"></span>', Url::toRoute(['user/delete','id'=>$model->id]), [
+                                'title' => Yii::t('app','Xóa user'),
+                                'data-confirm' => Yii::t('app', 'Bạn chắc chắn muốn xóa người dùng này?')
+                            ]);
+                        }
+                    }
+                ]
+            ],
+        ],
+    ]); ?>
+
             </div>
         </div>
     </div>

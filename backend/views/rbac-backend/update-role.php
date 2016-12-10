@@ -10,8 +10,8 @@ use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $model common\models\AuthItem */
 
-$this->title = Yii::t('app','cap_nhat_nhom_quyen').': ' . ' ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Roles backend', 'url' => ['role']];
+$this->title = Yii::t('app','Cập nhật nhóm quyền: ') . ' ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => Yii::t('app','Quản lý nhóm quyền backend'), 'url' => ['role']];
 //$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view-role', 'name' => $model->name]];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -30,7 +30,7 @@ ToastAsset::config($this, [
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    <?= Yii::t('app','thong_tin_chung') ?>
+                    <?= Yii::t('app','Thông tin chung') ?>
                 </div>
             </div>
             <div class="portlet-body">
@@ -47,10 +47,12 @@ ToastAsset::config($this, [
     $childrenGridId ='rbac-role-children';
 
     $revokeUrl = \yii\helpers\Url::to(['rbac-backend/role-revoke-auth-item']);
-
+    $m1 = Yii::t('app','Bạn có thực sự muốn xóa quyền');
+    $m2 = Yii::t('app','khỏi nhóm quyền');
+    $m3 = Yii::t('app','không?');
     $js = <<<JS
 function revokeItem(item){
-    if(confirm("Bạn có thực sự muốn xóa quyền '" + item + "' khỏi nhóm quyền '" + "$model->name" + "' không?")){
+    if(confirm('{$m1}' + item + '{$m2}' + "$model->name" + '{$m3}')){
     jQuery.post(
         '{$revokeUrl}'
         ,{ parent: "$model->name", child:item}
@@ -104,11 +106,11 @@ JS;
             <div class="portlet-title">
                 <div class="caption">
                     <i class="fa fa-globe"></i>
-                    <?= Yii::t('app','quyen_nhom_quyen') ?>
+                    <?= Yii::t('app','Quyền và nhóm quyền') ?>
                 </div>
             </div>
             <div class="portlet-body">
-                <h3><?= Yii::t('app','nhom_quyen_cha') ?></h3>
+                <h3>Nhóm quyền cha</h3>
                 <?= GridView::widget([
                     'id' => 'rbac-role-parent',
                     'dataProvider' => $model->getParentProvider(),
@@ -124,16 +126,15 @@ JS;
                                 /**
                                  * @var $model \common\models\AuthItem
                                  */
-//                                $res = Html::a($model->name, ['rbac-backend/update-role', 'name' => $model->name]);
-//                                $res .= " [" . sizeof($model->children) . "]";
-//                                return $res;
-                                return $model->name;
+                                $res = Html::a($model->description, ['rbac-backend/update-role', 'name' => $model->name]);
+                                $res .= " [" . sizeof($model->children) . "]";
+                                return $res;
                             },
                         ],
                         'description',
                     ],
                 ]); ?>
-                <h3><?= Yii::t('app','quyen_nhom_quyen_con') ?></h3>
+                <h3><?= Yii::t('app','Quyền/nhóm quyền con') ?></h3>
                 <?= GridView::widget([
                     'id' => $childrenGridId,
                     'dataProvider' => $model->getChildrenProvider(),
@@ -150,13 +151,12 @@ JS;
                                 /**
                                  * @var $model \common\models\AuthItem
                                  */
-//                                $action = $model->type == \common\models\AuthItem::TYPE_ROLE?'rbac-backend/update-role':'rbac-backend/update-permission';
-//                                $res = Html::a($model->name, [$action, 'name' => $model->name]);
-//                                if ($model->type == \common\models\AuthItem::TYPE_ROLE) {
-//                                    $res .= " [" . sizeof($model->children) . "]";
-//                                }
-//                                return $res;
-                                return $model->name;
+                                $action = $model->type == \common\models\AuthItem::TYPE_ROLE?'rbac-backend/update-role':'rbac-backend/update-permission';
+                                $res = Html::a($model->description, [$action, 'name' => $model->name]);
+                                if ($model->type == \common\models\AuthItem::TYPE_ROLE) {
+                                    $res .= " [" . sizeof($model->children) . "]";
+                                }
+                                return $res;
                             },
                         ],
                         [
@@ -171,7 +171,7 @@ JS;
                                 /**
                                  * @var $model \common\models\AuthItem
                                  */
-                                $res = $model->type == \common\models\AuthItem::TYPE_PERMISSION?Yii::t('app','quyen') : Yii::t('app','nhom_quyen');
+                                $res = $model->type == \common\models\AuthItem::TYPE_PERMISSION?"Quyền" : "Nhóm quyền";
                                 return $res;
                             },
                         ],
@@ -181,7 +181,7 @@ JS;
                                 'revoke' => function ($url, $model1, $key) {
                                     return Html::button('<i class="glyphicon glyphicon-remove-circle"></i> Revoke', [
                                         'type' => 'button',
-                                        'title' => Yii::t('app','xoa_quyen'),
+                                        'title' => Yii::t('app','Xóa quyền'),
                                         'class' => 'btn btn-danger',
                                         'onclick' => "revokeItem('$model1->name');"
                                     ]);
@@ -191,7 +191,7 @@ JS;
                     ],
                 ]); ?>
 
-                <h3><?= Yii::t('app','them_quyen_nhom_quyen_con') ?></h3>
+                <h3><?= Yii::t('app','Thêm quyền/nhóm quyền con') ?></h3>
                 <?php
 
                 $form = ActiveForm::begin([
@@ -203,14 +203,14 @@ JS;
                 <div class="form-group">
                 <?php
 
-                $roles = \yii\helpers\ArrayHelper::map($model->getMissingRoles(), "name", "name");
-                $permissions = \yii\helpers\ArrayHelper::map($model->getMissingPermissions(), "name", "name");
-                $data = [Yii::t('app','nhom_quyen') => $roles,Yii::t('app','quyen') => $permissions];
+                $roles = \yii\helpers\ArrayHelper::map($model->getMissingRoles(), "name", "description");
+                $permissions = \yii\helpers\ArrayHelper::map($model->getMissingPermissions(), "name", "description");
+                $data = [Yii::t('app',"Nhóm quyền") => $roles,Yii::t('app',"Quyền") => $permissions];
                 echo Select2::widget([
                     'name' => 'addItems',
                     'data' => $data,
                     'options' => [
-                        'placeholder' => Yii::t('app','chon_quyen_nhom_quyen'),
+                        'placeholder' => Yii::t('app','Chọn quyền/nhóm quyền ...'),
                         'multiple' => true
                     ],
                 ]);
@@ -218,7 +218,7 @@ JS;
                 </div>
 
                 <div class="form-group">
-                    <?= Html::submitButton(Yii::t('app','them_quyen'),
+                    <?= Html::submitButton(Yii::t('app','Thêm quyền'),
                         ['class' => 'btn btn-primary']) ?>
                 </div>
 
