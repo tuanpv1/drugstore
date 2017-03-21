@@ -136,18 +136,10 @@ $title = "Bổ thận tráng dương"
             </div>
             <div class="line">
                 <div class="s-1 m-1 l-1 text-center">
-                    <i class="icon-twitter text-primary text-size-12"></i>
-                </div>
-                <div class="s-11 m-11 l-11 margin-bottom-10">
-                    <p><a href="/" class="text-primary-hover"><b>Twitter</b></a></p>
-                </div>
-            </div>
-            <div class="line">
-                <div class="s-1 m-1 l-1 text-center">
                     <i class="icon-facebook text-primary text-size-12"></i>
                 </div>
                 <div class="s-11 m-11 l-11">
-                    <p><a href="/" class="text-primary-hover"><b>Facebook</b></a></p>
+                    <p><a target="_blank" href="https://www.facebook.com/dongychuayeusinhly/" class="text-primary-hover"><b>Facebook</b></a></p>
                 </div>
             </div>
         </div>
@@ -206,10 +198,10 @@ $title = "Bổ thận tráng dương"
                             <h4 class="text-uppercase text-strong text_request">Yêu cầu gọi lại miễn phí</h4>
                             <div class="line">
                                 <div class="margin">
-                                    <div class="s-6 m-6 1-8">
+                                    <div class="s-8 m-8 1-8">
                                         <input name="phone_ddd" id="phone_ddd" class="required email border-radius" placeholder="Số điện thoại" title="Số điện thoại" type="tel" />
                                     </div>
-                                    <div class="s-6 m-6 1-3">
+                                    <div class="s-4 m-4 1-3">
                                         <a id="btn_tp" class="submit-form button background-primary border-radius text-white">Gửi</a>
                                     </div>
                                 </div>

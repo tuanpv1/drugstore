@@ -8,7 +8,7 @@ use yii\helpers\Url;
  if($post){
      foreach($post as $item){
          ?>
-         <section class="section background-dark">
+         <section class="section tp_100">
          <div class="line">
              <div class="margin">
                  <!-- Collumn 1 -->
