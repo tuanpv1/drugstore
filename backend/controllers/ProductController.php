@@ -81,10 +81,10 @@ class ProductController extends Controller
                     $model->image = $file_name;
                 }
             }
-            if($model->save()) {
+            if ($model->save()) {
                 Yii::$app->getSession()->setFlash('success', 'Tạo nhóm thành công');
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
+            } else {
                 Yii::$app->getSession()->setFlash('error', 'Tạo nhóm không thành công');
                 return $this->render('create', [
                     'model' => $model,
@@ -106,6 +106,7 @@ class ProductController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        /** @var Product $model */
         if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
             Yii::$app->response->format = Response::FORMAT_JSON;
             return ActiveForm::validate($model);
@@ -114,8 +115,10 @@ class ProductController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
+                $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_product') . "/" . $file_name)) {
+                if ($image->saveAs($tmp . $file_name)) {
+                    unlink($tmp . $image_old);
                     $model->image = $file_name;
                 } else {
                     $model->image = $image_old;
@@ -142,16 +145,21 @@ class ProductController extends Controller
      */
     public function actionDelete($id)
     {
-        $model = Product::findOne($id);
-        if($model->status == Product::STATUS_ACTIVE){
+        $model = $this->findModel($id);
+        /** @var  Product $model */
+        if ($model->status == Product::STATUS_ACTIVE) {
             Yii::$app->getSession()->setFlash('error', 'Không được xóa sản phẩm ở trạng thái hoạt động');
             return $this->redirect(['view', 'id' => $model->id]);
         }
-        $order_detail = OrderDetail::findOne(['id_product'=>$id]);
-        if($order_detail){
+        $order_detail = OrderDetail::findOne(['id_product' => $id]);
+        if ($order_detail) {
             Yii::$app->getSession()->setFlash('error', 'Không được xóa sản phẩm đang có trong đơn hàng, vui lòng chuyển sang chế độ ẩn sản phẩm.');
             return $this->redirect(['view', 'id' => $model->id]);
         }
+
+        $model = $this->findModel($id);
+        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
+        unlink($tmp . $model->image);
         $model->delete();
         Yii::$app->getSession()->setFlash('success', 'Đã xóa sản phẩm thành công');
         return $this->redirect(['index']);

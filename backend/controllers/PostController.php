@@ -108,11 +108,14 @@ class PostController extends Controller
 //            Yii::$app->response->format = Response::FORMAT_JSON;
 //            return ActiveForm::validate($model);
 //        }
+        $old_image = $model->image;
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
+                $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_post') . "/" ;
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_post') . "/" . $file_name)) {
+                if ($image->saveAs($tmp . $file_name)) {
+                    unlink($tmp . $old_image);
                     $model->image = $file_name;
                 }
             }
@@ -146,6 +149,9 @@ class PostController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $model = $this->findModel($id);
+        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
+        unlink($tmp . $model->image);
         $model->delete();
         Yii::$app->getSession()->setFlash('success', 'Đã xóa bài viết thành công');
         return $this->redirect(['index']);

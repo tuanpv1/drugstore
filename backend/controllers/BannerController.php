@@ -74,16 +74,17 @@ class BannerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
-                $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
+                if (exit())
+                    $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
                 if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/" . $file_name)) {
                     $model->image = $file_name;
                 }
             }
-            if($model->save()) {
-                Yii::$app->getSession()->setFlash('success', 'Tạo nhóm thành công');
+            if ($model->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Tạo banner thành công');
                 return $this->redirect(['view', 'id' => $model->id]);
-            }else{
-                Yii::$app->getSession()->setFlash('error', 'Tạo nhóm không thành công');
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Tạo banner thành công');
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -114,8 +115,10 @@ class BannerController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
+                $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
-                if ($image->saveAs(Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/" . $file_name)) {
+                if ($image->saveAs($tmp . $file_name)) {
+                    unlink($tmp . $image_old);
                     $model->image = $file_name;
                 } else {
                     $model->image = $image_old;
@@ -142,8 +145,11 @@ class BannerController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
+        unlink($tmp . $model->image);
+        $model->delete();
+        Yii::t('app','Xóa ảnh banner thành công');
         return $this->redirect(['index']);
     }
 
