@@ -222,6 +222,5 @@ $title = "Bổ thận tráng dương"
     </div>
 <?php $this->endBody() ?>
 </body>
-<script lang="javascript">(function() {var pname = ( (document.title !='')? document.title : document.querySelector('h1').innerHTML );var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async=1; ga.src = '//live.vnpgroup.net/js/web_client_box.php?hash=bd823953f96c31f88f467d27d28c199f&data=eyJzc29faWQiOjQyNzI1NjUsImhhc2giOiI5NjZiMTZkMjk1ZTNmMzcxNzY1MDUzYzdhYmYzN2FkNyJ9&pname='+pname;var s = document.getElementsByTagName('script');s[0].parentNode.insertBefore(ga, s[0]);})();</script>
 </html>
 <?php $this->endPage() ?>
