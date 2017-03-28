@@ -2,6 +2,7 @@
 
 use common\models\Food;
 use common\models\Product;
+use common\widgets\CKEditor;
 use yii\helpers\Html;
 use kartik\widgets\ActiveForm;
 

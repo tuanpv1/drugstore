@@ -62,7 +62,7 @@ use yii\helpers\Url;
     <div class="line">
         <div class="s-12 m-10 l-11">
             <p class="s-12 m-10 l-8 text-size-20 right">
-                Mọi thắc mắc bạn có thể liê hệ ngay tổng đài tư vấn hỗ trợ<br> hotline: 0972.64.9696
+                Mọi thắc mắc bạn có thể liên hệ ngay tổng đài tư vấn hỗ trợ<br> Hotline: 0972.64.9696
             </p>
             <p class="s-12 m-10 l-4 right">
                 <img class="right" style="width: 300px" src="<?=  Yii::$app->request->baseUrl; ?>/img/tuvan.jpg" alt="Tổng đài hỗ trợ">
