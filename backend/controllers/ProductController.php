@@ -115,7 +115,7 @@ class ProductController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
-                $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
+                $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_product') . "/";
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
                 if ($image->saveAs($tmp . $file_name)) {
                     unlink($tmp . $image_old);
