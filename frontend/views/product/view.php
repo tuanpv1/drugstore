@@ -14,7 +14,7 @@ use yii\helpers\Url;
                 <div class="margin">
                     <div class="line">
                         <div class="s-12 m-6 l-6 margin-bottom-30   ">
-                            <img class="tp_001" src="<?= $product->getImageLink() ?>" alt="<?= $product->name ?>">
+                            <img style="width: 450px" class="tp_001" src="<?= $product->getImageLink() ?>" alt="<?= $product->name ?>">
                         </div>
                         <div class="s-12 m-6 l-6">
                             <h4 class="text-thin"><?= $product->name ?></h4>
