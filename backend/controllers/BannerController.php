@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use kartik\widgets\ActiveForm;
+use kcfinder\file;
 use Yii;
 use common\models\Banner;
 use common\models\BannerSearch;
@@ -118,7 +119,9 @@ class BannerController extends Controller
                 $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
                 if ($image->saveAs($tmp . $file_name)) {
-                    unlink($tmp . $image_old);
+                    if(file_exists($tmp . $image_old)){
+                        unlink($tmp . $image_old);
+                    }
                     $model->image = $file_name;
                 } else {
                     $model->image = $image_old;
@@ -147,7 +150,9 @@ class BannerController extends Controller
     {
         $model = $this->findModel($id);
         $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
-        unlink($tmp . $model->image);
+        if(file_exists($tmp.$model->image)){
+            unlink($tmp . $model->image);
+        }
         $model->delete();
         Yii::t('app','Xóa ảnh banner thành công');
         return $this->redirect(['index']);
