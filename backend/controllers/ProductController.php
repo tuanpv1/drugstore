@@ -158,7 +158,7 @@ class ProductController extends Controller
         }
 
         $model = $this->findModel($id);
-        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
+        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_product') . "/";
         unlink($tmp . $model->image);
         $model->delete();
         Yii::$app->getSession()->setFlash('success', 'Đã xóa sản phẩm thành công');
