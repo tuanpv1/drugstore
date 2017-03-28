@@ -115,7 +115,9 @@ class PostController extends Controller
                 $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_post') . "/" ;
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
                 if ($image->saveAs($tmp . $file_name)) {
-                    unlink($tmp . $old_image);
+                    if(file_exists($tmp.$old_image)){
+                        unlink($tmp . $old_image);
+                    }
                     $model->image = $file_name;
                 }
             }
@@ -150,8 +152,10 @@ class PostController extends Controller
         }
 
         $model = $this->findModel($id);
-        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_banner') . "/";
-        unlink($tmp . $model->image);
+        $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_post') . "/";
+        if(file_exists($tmp.$model->image)){
+            unlink($tmp . $model->image);
+        }
         $model->delete();
         Yii::$app->getSession()->setFlash('success', 'Đã xóa bài viết thành công');
         return $this->redirect(['index']);
