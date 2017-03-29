@@ -13,6 +13,7 @@ use yii\helpers\Url;
  * @property string $image
  * @property string $name
  * @property string $des
+ * @property string $short_des
  * @property integer $price
  * @property integer $sale
  * @property integer $status
@@ -65,7 +66,7 @@ class Product extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['des'], 'string'],
+            [['des','short_des'], 'string'],
             [['price', 'sale', 'status', 'created_at', 'updated_at'], 'integer'],
             [['image', 'name'], 'string', 'max' => 255],
         ];
@@ -81,6 +82,7 @@ class Product extends \yii\db\ActiveRecord
             'image' => 'Hình ảnh',
             'name' => 'Tên Thuốc',
             'des' => 'Mô tả',
+            'short_des' => 'Mô tả ngắn',
             'price' => 'Giá',
             'sale' => 'Giảm giá',
             'status' => 'Trạng thái',

@@ -44,10 +44,11 @@ use yii\helpers\Url;
                             <p class="margin-bottom-30">Giá: <?= Product::formatNumber($item->price) ?> VND</p>
                             <div>
                                 <a class="button border-radius background-success text-size-12 text-white text-strong"
-                                   href="<?= Url::to(['product/detail','id'=>$item->id]) ?>">Xem chi tiết</a>
+                                   href="<?= Url::to(['product/detail','id'=>$item->id]) ?>">Xem </a>
                                 <a class="button border-radius background-primary text-size-12 text-white text-strong"
                                    href="javascript:void(0)" onclick="addCart(<?= $item->id ?>)">Mua</a>
                             </div>
+                            <p><?= $item->short_des?$item->short_des:'Đang cập nhật'?></p>
                         </div>
                     </div>
                     <?php

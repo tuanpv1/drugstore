@@ -45,6 +45,7 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
 
     ]);
     ?>
+    <?= $form->field($model, 'short_des')->textInput(['rows' => 6]) ?>
 
     <?= $form->field($model, 'des')->widget(CKEditor::className(), [
         'options' => [
