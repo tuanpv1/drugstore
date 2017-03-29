@@ -118,7 +118,7 @@ class ProductController extends Controller
                 $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_product') . "/";
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
                 if ($image->saveAs($tmp . $file_name)) {
-                    if(file_exists($tmp . $image_old)){
+                    if(file_exists($tmp . $image_old) && !empty($image_old)){
                         unlink($tmp . $image_old);
                     }
                     $model->image = $file_name;
