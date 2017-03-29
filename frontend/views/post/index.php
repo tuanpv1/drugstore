@@ -1,4 +1,5 @@
 <?php
+use common\models\Product;
 use yii\helpers\Url;
 ?>
 <header class="section background-primary text-center tp_003">
@@ -11,7 +12,7 @@ use yii\helpers\Url;
          if($post){
              foreach($post as $item){
                  ?>
-                 <section class="section tp_100">
+                 <section class="section">
                  <div class="line">
                      <div class="margin">
                          <!-- Collumn 1 -->
@@ -55,6 +56,7 @@ use yii\helpers\Url;
                             </div>
                             <div class="s-8 m-8 l-8 margin-m-bottom">
                                 <p style="color: black"><?= $item->name ?></p>
+                                <p style="color: black">Giá: <?= Product::formatNumber($item->price) ?> VND</p></p>
                                 <a class="text-more-info text-primary-hover" href="<?= Url::to(['post/detail','id'=>$item->id])?>">Xem chi tiết</a>
                             </div>
                         </div>
