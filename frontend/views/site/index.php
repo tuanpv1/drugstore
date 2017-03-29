@@ -96,7 +96,7 @@ use yii\helpers\Url;
                     </div>
                 <?php
                 $index++;
-                if ($index % 2 == 0 && $index != count($post) && $index !=0 ) { ?>
+                if ($index % 2 == 0 && $index <= count($post) && $index !=0 ) { ?>
                 </div>
             </div>
             <?php
