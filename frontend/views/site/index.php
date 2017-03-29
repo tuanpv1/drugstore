@@ -49,7 +49,7 @@ use yii\helpers\Url;
                                    href="javascript:void(0)" onclick="addCart(<?= $item->id ?>)">Mua</a>
                             </div>
                             <div class="1-12 text-center"><br>
-                                <p><?= $item->short_des?$item->short_des:'Đang cập nhật'?></p>
+                                <p><?= Product::substr($item->short_des?$item->short_des:'Đang cập nhật',42)?></p>
                             </div>
                         </div>
                     </div>

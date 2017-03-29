@@ -10,7 +10,7 @@ use yii\helpers\Url;
     if($post){
         ?>
         <div class="line">
-            <div class="s-12 m-12 l-9">
+            <div class="s-12 m-12 l-8">
                 <div class="line">
                     <!-- Collumn 1 -->
                     <h4 class="text-uppercase text-strong"><?= $post->name ?></h4>
@@ -34,7 +34,7 @@ use yii\helpers\Url;
                     </div>
                 </div>
             </div>
-            <div class="s-12 m-12 l-3">
+            <div class="s-12 m-12 l-4">
                 <h4 class="text-uppercase text-strong">Bài viết bạn có thể quan tâm</h4>
                 <?php
                 if($involve){
