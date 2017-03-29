@@ -48,7 +48,7 @@ use yii\helpers\Url;
                                 <a class="button border-radius background-primary text-size-12 text-white text-strong"
                                    href="javascript:void(0)" onclick="addCart(<?= $item->id ?>)">Mua</a>
                             </div>
-                            <div class="1-12">
+                            <div class="1-12 text-center"><br>
                                 <p><?= $item->short_des?$item->short_des:'Đang cập nhật'?></p>
                             </div>
                         </div>
