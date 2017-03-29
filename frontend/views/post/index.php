@@ -55,7 +55,7 @@ use yii\helpers\Url;
                                 <a class="image-hover-zoom" href="<?= Url::to(['product/detail','id'=>$item->id])?>"><img style="height: 80px" src="<?= $item->getImageLink() ?>" alt=""></a>
                             </div>
                             <div class="s-8 m-8 l-8 margin-m-bottom">
-                                <p style="color: black"><a href="<?= Url::to(['product/detail','id'=>$item->id])?>"></a><?= $item->name ?></p>
+                                <p style="color: black"><a style="color: #00aa00" href="<?= Url::to(['product/detail','id'=>$item->id])?>"><?= $item->name ?></a></p>
                                 <p style="color: black">Giá: <?= Product::formatNumber($item->price) ?> VND</p>
                                 <p style="color: black"><?= Product::substr($item->short_des?$item->short_des:'Đang cập nhật',55) ?></p>
                                 <a class="text-more-info text-primary-hover" href="<?= Url::to(['product/detail','id'=>$item->id])?>">Xem chi tiết</a>
