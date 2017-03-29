@@ -98,6 +98,8 @@ use yii\helpers\Url;
                 if ($index % 2 == 0 && $index <= count($post) && $index !=0 ) {?>
                 </div>
             </div>
+            <div class="item">
+                <div class="margin">
             <?php
             }
             $index++;
