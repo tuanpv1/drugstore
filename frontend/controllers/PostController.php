@@ -2,6 +2,7 @@
 namespace frontend\controllers;
 
 use common\models\Post;
+use common\models\Product;
 use Yii;
 use yii\web\Controller;
 
@@ -12,9 +13,11 @@ class PostController extends Controller
 {
     public function actionIndex()
     {
+        $product = Product::findAll(['status'=>Product::STATUS_ACTIVE]);
         $post = Post::find()->andWhere(['status'=>Post::STATUS_ACTIVE])->all();
         return $this->render('index',[
-            'post'=>$post
+            'post'=>$post,
+            'product'=>$product,
         ]);
     }
 
