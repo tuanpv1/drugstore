@@ -54,15 +54,15 @@ $title = "Bổ thận tráng dương"
     <!-- Top Navigation -->
     <nav class="background-white background-primary-hightlight">
         <div class="line">
-            <div class="s-12 l-2 tp_007">
+            <div class="s-6 l-2 tp_007">
                 <a href="<?= Url::to(['site/index']) ?>" class="logo tp_008"><img style="width: 96px;padding-top: 10px;padding-left: 10px" src="<?=  Yii::$app->request->baseUrl; ?>/img/logo_free.png" alt="Trang chủ"></a>
             </div>
-            <div class="top-nav s-12 l-10">
+            <div class="top-nav s-6 l-10">
                 <p class="nav-text"></p>
                 <ul class="right chevron">
                     <li><a href="<?=  Url::to(['site/index']) ?>">TRANG CHỦ</a></li>
                     <li><a href="<?=  Url::to(['product/index']) ?>">THUỐC</a></li>
-                    <li><a href="<?=  Url::to(['post/index']) ?>">MẸO HAY NHÂN GIAN</a></li>
+                    <li><a href="<?=  Url::to(['post/index']) ?>">TIN TỨC</a></li>
                     <li><a href="<?=  Url::to(['site/about']) ?>">GIỚI THIỆU</a></li>
                     <li><a href="<?=  Url::to(['site/contact']) ?>">LIÊN HỆ</a></li>
                 </ul>
