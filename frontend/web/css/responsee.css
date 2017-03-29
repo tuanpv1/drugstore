@@ -47,7 +47,7 @@ b,strong {font-weight:700;}
 .text-right {text-align:right!important;}
 img {
   border:0;
-  display:block;
+  /*display:block;*/
   height:auto;
   max-width:100%;
   width:auto;

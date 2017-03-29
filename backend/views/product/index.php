@@ -52,7 +52,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Html::a($model->name, ['view', 'id' => $model->id], ['class' => 'label label-primary']);
                         },
                     ],
-                    'des:ntext',
                     [
                         'class' => '\kartik\grid\DataColumn',
                         'attribute' => 'status',

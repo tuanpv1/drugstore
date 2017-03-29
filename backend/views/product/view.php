@@ -63,7 +63,11 @@ $this->params['breadcrumbs'][] = $this->title;
                                     '<span class="label label-success">' . $model->getStatusName() . '</span>' :
                                     '<span class="label label-danger">' . $model->getStatusName() . '</span>',
                             ],
-                            'des:ntext',
+                            [
+                                'attribute' => 'des',
+                                'format'=>'html',
+                                'des:ntext',
+                            ],
                             [                      // the owner name of the model
                                 'attribute' => 'created_at',
                                 'label' => 'Ngày tham gia',
