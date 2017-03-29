@@ -59,17 +59,8 @@ use yii\helpers\Url;
 </section>
 
 <!-- Section 2 -->
-<section class="section background-primary text-center">
-    <div class="line">
-        <div class="s-12 m-10 l-11">
-            <p class="s-12 m-10 l-8 text-size-20 right">
-                Mọi thắc mắc bạn có thể liên hệ ngay tổng đài tư vấn hỗ trợ<br> Hotline: 0972.64.9696
-            </p>
-            <p class="s-12 m-10 l-4 right">
-                <img class="right" style="width: 300px" src="<?=  Yii::$app->request->baseUrl; ?>/img/tuvan.jpg" alt="Tổng đài hỗ trợ">
-            </p>
-        </div>
-    </div>
+<section class="section text-center">
+    <img class="right" style="width: 100%" src="<?=  Yii::$app->request->baseUrl; ?>/img/banner_ng.png" alt="Tổng đài hỗ trợ">
 </section>
 <hr class="break margin-top-bottom-0">
 
