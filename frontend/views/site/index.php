@@ -74,7 +74,7 @@ use yii\helpers\Url;
         <div class="carousel-default owl-carousel carousel-wide-arrows">
             <div class="item">
                 <div class="margin">
-                <?php $index = 1; foreach ($post as $value) { ?>
+                <?php $index = 0; foreach ($post as $value) { ?>
                     <div class="s-12 m-12 l-6">
                         <div class="image-border-radius margin-m-bottom">
                             <div class="margin">
@@ -96,7 +96,7 @@ use yii\helpers\Url;
                     </div>
                 <?php
                 $index++;
-                if ($index % 2 == 0 && $index != count($post)) { ?>
+                if ($index % 2 == 0 && $index != count($post) && $index !=0 ) { ?>
                 </div>
             </div>
             <?php
