@@ -19,7 +19,7 @@ use yii\helpers\Url;
                         <div class="s-12 m-6 l-6">
                             <h4 class="text-thin"><?= $product->name ?></h4>
                             <p class="margin-bottom-30">Giá: <?= Product::formatNumber($product->price) ?> VND</p>
-                            <p> <?= $item->short_des?$item->short_des:'Đang cập nhật' ?></p>
+                            <p> <?= $product->short_des?$product->short_des:'Đang cập nhật' ?></p>
                             <a class="button border-radius background-primary text-size-12 text-white text-strong"
                                href="javascript:void(0)" onclick="addCart(<?= $product->id ?>)">Mua
                             </a>
