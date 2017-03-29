@@ -212,6 +212,9 @@ a.desc:after {
     .top-nav.s-12.l-10 {
         padding: 0;
     }
+    .p_tp_top{
+        margin-top: 0px;
+    }
 }
 
 .image_cart{
@@ -225,4 +228,7 @@ a.desc:after {
 }
 .tp_100{
     background-color: #f1f8e9 !important;
+}
+.p_tp_top{
+    margin-top: 28px;
 }
