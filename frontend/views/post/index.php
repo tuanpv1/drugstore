@@ -17,7 +17,7 @@ use yii\helpers\Url;
                      <div class="line">
                          <div class="margin">
                                  <div class="s-12 m-12 l-12 margin-m-bottom">
-                                     <a class="image-hover-zoom" href="/"><img class="tp_001" style="width: 210px" src="<?= $item->getImageLink() ?>" alt="<?= $item->name ?>"></a>
+                                     <a class="image-hover-zoom" href="<?= Url::to(['post/detail','id'=>$item->id])?>"><img class="tp_001" style="width: 210px" src="<?= $item->getImageLink() ?>" alt="<?= $item->name ?>"></a>
                                  </div>
                          </div>
                      </div>
