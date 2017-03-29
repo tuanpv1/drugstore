@@ -57,7 +57,7 @@ use yii\helpers\Url;
                             <div class="s-8 m-8 l-8 margin-m-bottom">
                                 <p style="color: black"><a href="<?= Url::to(['product/detail','id'=>$item->id])?>"></a><?= $item->name ?></p>
                                 <p style="color: black">Giá: <?= Product::formatNumber($item->price) ?> VND</p>
-                                <p style="color: black"><?= Product::substr($item->short_des?$item->short_des:'Đang cập nhật',47) ?></p>
+                                <p style="color: black"><?= Product::substr($item->short_des?$item->short_des:'Đang cập nhật',55) ?></p>
                                 <a class="text-more-info text-primary-hover" href="<?= Url::to(['product/detail','id'=>$item->id])?>">Xem chi tiết</a>
                             </div>
                         </div>
