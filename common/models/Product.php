@@ -124,7 +124,7 @@ class Product extends \yii\db\ActiveRecord
         return Url::to($pathLink . $filename, true);
     }
 
-    public function substr($str, $length, $minword = 3)
+    public static function substr($str, $length, $minword = 3)
     {
         $sub = '';
         $len = 0;
