@@ -90,7 +90,7 @@ $title = "Bổ thận tráng dương"
             <div class="margin">
                 <!-- Collumn 1 -->
                 <div class="s-12 m-12 l-4 margin-m-bottom-2x">
-                    <h4 class="text-uppercase text-strong">Đông y Ông Lang Chức</h4>
+                    <h4 class="text-uppercase text-strong">Đông Y Gia Truyền</h4>
                     <p class="text-size-20"><em>"Được thừa hưởng từ bí quyết của cha ông để lại nhà thuốc đông y đã giúp đỡ hàng nghìn bệnh nhân lấy lại được phong độ."</em><p>
 
                         <div class="line">
@@ -177,7 +177,7 @@ $title = "Bổ thận tráng dương"
     <section class="padding background-dark">
         <div class="line">
             <div class="s-12 l-6">
-                <p class="text-size-12">Copyright 2016 @ThuocDongY</p>
+                <p class="text-size-12">Copyright 2016 @ThuocDongYGiaTruyen</p>
                 <p class="text-size-12">Liên hệ thiết kế website SDT: 094.3434.093</p>
             </div>
             <div class="s-12 l-6">
