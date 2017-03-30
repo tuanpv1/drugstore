@@ -67,10 +67,11 @@ class PostController extends Controller
     public function actionCreate()
     {
         $model = new Post();
-//        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-//            Yii::$app->response->format = Response::FORMAT_JSON;
-//            return ActiveForm::validate($model);
-//        }
+        $model->setScenario('create');
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');
             if ($image) {
@@ -104,10 +105,10 @@ class PostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-//        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-//            Yii::$app->response->format = Response::FORMAT_JSON;
-//            return ActiveForm::validate($model);
-//        }
+        if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+            Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($model);
+        }
         $old_image = $model->image;
         if ($model->load(Yii::$app->request->post())) {
             $image = UploadedFile::getInstance($model, 'image');

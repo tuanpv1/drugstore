@@ -56,7 +56,7 @@ class Post extends \yii\db\ActiveRecord
             [['des'], 'string'],
             [['created_at', 'updated_at', 'status'], 'integer'],
             [['image', 'name','short_des'], 'string', 'max' => 255],
-            [['image'], 'required', 'message' => 'Hình ảnh đại diện không được để trống'],
+            [['image'], 'required', 'message' => 'Hình ảnh đại diện không được để trống','on'=>'create'],
             [[ 'name'], 'required', 'message' => 'Tên bài viết không được để trống'],
             [['short_des'], 'required', 'message' => 'Mô tả ngắn không được để trống'],
         ];
