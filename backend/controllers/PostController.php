@@ -116,11 +116,13 @@ class PostController extends Controller
                 $tmp = Yii::getAlias('@webroot') . "/" . Yii::getAlias('@image_post') . "/" ;
                 $file_name = Yii::$app->user->id . '.' . uniqid() . time() . '.' . $image->extension;
                 if ($image->saveAs($tmp . $file_name)) {
-                    if(file_exists($tmp.$old_image)){
+                    if(file_exists($tmp.$old_image) && !empty($old_image)){
                         unlink($tmp . $old_image);
                     }
                     $model->image = $file_name;
                 }
+            }else{
+                $model->image = $old_image;
             }
             if($model->update()) {
                 Yii::$app->getSession()->setFlash('success', 'Cập nhật bài viết thành công');
