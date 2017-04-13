@@ -49,10 +49,7 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
         'options' => [
             'rows' => 6,
         ],
-        'disabled' => false,
         'uploadURL' => Yii::getAlias('@web') . '/' . Yii::getAlias('@image_post') . "/",
-        'uploadDir' => "",
-        'theme' => "default",
     ]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(['Chọn trạng thái'=>Post::getListStatus()]) ?>
