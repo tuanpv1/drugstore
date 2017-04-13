@@ -4,6 +4,7 @@ namespace frontend\controllers;
 use common\models\Banner;
 use common\models\Post;
 use common\models\Product;
+use common\models\TrackerUser;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\web\BadRequestHttpException;
@@ -78,6 +79,27 @@ class SiteController extends Controller
         $banner = Banner::find()->andWhere(['status'=>Banner::STATUS_ACTIVE])->all();
         $product = Product::find()->andWhere(['status'=>Product::STATUS_ACTIVE])->all();
         $post = Post::find()->andWhere(['status'=>Product::STATUS_ACTIVE])->all();
+        $ip = Yii::$app->request->getUserIP();
+        $find_model_ip = TrackerUser::findOne(['ip'=>$ip]); /** @var TrackerUser $find_model_ip */
+        if(isset($find_model_ip) && !empty($find_model_ip)){
+            $time_last = $find_model_ip->updated_at + 15*60;
+            if($time_last <= time() ){
+                $old_number = $find_model_ip->number;
+                $find_model_ip->number = $old_number+1;
+                $old_number_phone = $find_model_ip->phone;
+                $find_model_ip->phone = $old_number_phone+1;
+            }else{
+                $old_number_phone = $find_model_ip->phone;
+                $find_model_ip->phone = $old_number_phone+1;
+            }
+            $find_model_ip->update();
+        }else{
+            $ip_table = new TrackerUser();
+            $ip_table->ip = $ip;
+            $ip_table->number = 1;
+            $ip_table->phone = 1;
+            $ip_table->save();
+        }
         return $this->render('index',[
             'product'=>$product,
             'banner'=>$banner,

@@ -156,6 +156,11 @@ $title = "Quản trị ông lang chức"
                     'label' => Yii::t('app','QL Báo cáo'),
                     'url' => ['report/product'],
                 ],
+                [
+                    'encode' => false,
+                    'label' => Yii::t('app','QL số lượt truy cập'),
+                    'url' => ['tracker-user/index'],
+                ],
             ]
         ],
         [
