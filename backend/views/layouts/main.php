@@ -254,15 +254,6 @@ $title = "Quản trị ông lang chức"
     </div>
 </div>
 <!-- END CONTAINER -->
-<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-<!-- Quảng cáo trên nhà thuốc -->
-<ins class="adsbygoogle"
-     style="display:inline-block;width:728px;height:90px"
-     data-ad-client="ca-pub-1810353436941461"
-     data-ad-slot="7431247833"></ins>
-<script>
-    (adsbygoogle = window.adsbygoogle || []).push({});
-</script>
 <!-- BEGIN FOOTER -->
 <div class="page-footer">
     <div class="container-fluid">
