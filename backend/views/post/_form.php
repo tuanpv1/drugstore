@@ -48,11 +48,11 @@ $avatarPreview = !$model->isNewRecord && !empty($model->image);
     <?= $form->field($model, 'des')->widget(CKEditor::className(), [
         'options' => [
             'rows' => 6,
-            'disabled' => false,
-            'uploadURL' => Yii::getAlias('@web') . '/' . Yii::getAlias('@image_post') . "/",
-            'uploadDir' => "",
-            'theme' => "default",
         ],
+        'disabled' => false,
+        'uploadURL' => Yii::getAlias('@web') . '/' . Yii::getAlias('@image_post') . "/",
+        'uploadDir' => "",
+        'theme' => "default",
     ]) ?>
 
     <?= $form->field($model, 'status')->dropDownList(['Chọn trạng thái'=>Post::getListStatus()]) ?>
