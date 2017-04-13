@@ -9,7 +9,7 @@ use kartik\widgets\ActiveForm;
 /* @var $model common\models\Post */
 /* @var $form yii\widgets\ActiveForm */
 $avatarPreview = !$model->isNewRecord && !empty($model->image);
-$_SESSION['CKEditor'] = ['disabled' => false];
+$_SESSION['KCFINDER'] = ['disabled' => false];
 ?>
 
 <div class="form-body">
